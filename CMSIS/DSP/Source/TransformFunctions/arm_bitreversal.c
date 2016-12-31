@@ -68,7 +68,7 @@ uint16_t * pBitRevTab)
    /* Bit Reversal Implementation */
    for (i = 0u; i <= (fftLenBy2 - 2u); i += 2u)
    {
-      if(i < j)
+      if (i < j)
       {
          /*  pSrc[i] <-> pSrc[j]; */
          in = pSrc[2u * i];
@@ -139,7 +139,7 @@ uint16_t * pBitRevTable)
    /* Bit Reversal Implementation */
    for (i = 0u; i <= (fftLenBy2 - 2u); i += 2u)
    {
-      if(i < j)
+      if (i < j)
       {
          /*  pSrc[i] <-> pSrc[j]; */
          in = pSrc[2u * i];
@@ -212,7 +212,7 @@ uint16_t * pBitRevTab)
    /* Bit Reversal Implementation */
    for (i = 0u; i <= (fftLenBy2 - 2u); i += 2u)
    {
-      if(i < j)
+      if (i < j)
       {
          /*  pSrc[i] <-> pSrc[j]; */
          /*  pSrc[i+1u] <-> pSrc[j+1u] */

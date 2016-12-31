@@ -79,7 +79,7 @@ void arm_power_q7(
   q7_t in;                                       /* Temporary variable to store input */
   uint32_t blkCnt;                               /* loop counter */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
   q31_t input1;                                  /* Temporary variable to store packed input */
@@ -90,7 +90,7 @@ void arm_power_q7(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Reading two inputs of pSrc vector and packing */
     input1 = *__SIMD32(pSrc)++;
@@ -117,9 +117,9 @@ void arm_power_q7(
   /* Loop over blockSize number of values */
   blkCnt = blockSize;
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = A[0] * A[0] + A[1] * A[1] + A[2] * A[2] + ... + A[blockSize-1] * A[blockSize-1] */
     /* Compute Power and then store the result in a temporary variable, sum. */

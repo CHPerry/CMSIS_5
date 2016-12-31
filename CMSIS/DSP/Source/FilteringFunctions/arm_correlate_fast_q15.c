@@ -108,7 +108,7 @@ void arm_correlate_fast_q15(
    * (srcALen - srcBLen) zeroes has to included in the starting of the output buffer */
   /* If srcALen < srcBLen,   
    * (srcALen - srcBLen) zeroes has to included in the ending of the output buffer */
-  if(srcALen >= srcBLen)
+  if (srcALen >= srcBLen)
   {
     /* Initialization of inputA pointer */
     pIn1 = (pSrcA);
@@ -190,7 +190,7 @@ void arm_correlate_fast_q15(
    * ----------------------*/
 
   /* The first loop starts here */
-  while(blockSize1 > 0u)
+  while (blockSize1 > 0u)
   {
     /* Accumulator is made zero for every iteration */
     sum = 0;
@@ -200,7 +200,7 @@ void arm_correlate_fast_q15(
 
     /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.   
      ** a second loop below computes MACs for the remaining 1 to 3 samples. */
-    while(k > 0u)
+    while (k > 0u)
     {
       /* x[0] * y[srcBLen - 4] , x[1] * y[srcBLen - 3] */
       sum = __SMLAD(*__SIMD32(px)++, *__SIMD32(py)++, sum);
@@ -215,7 +215,7 @@ void arm_correlate_fast_q15(
      ** No loop unrolling is used. */
     k = count % 0x4u;
 
-    while(k > 0u)
+    while (k > 0u)
     {
       /* Perform the multiply-accumulates */
       /* x[0] * y[srcBLen - 1] */
@@ -267,12 +267,12 @@ void arm_correlate_fast_q15(
   /* Stage2 depends on srcBLen as in this stage srcBLen number of MACS are performed.   
    * So, to loop unroll over blockSize2,   
    * srcBLen should be greater than or equal to 4, to loop unroll the srcBLen loop */
-  if(srcBLen >= 4u)
+  if (srcBLen >= 4u)
   {
     /* Loop unroll over blockSize2, by 4 */
     blkCnt = blockSize2 >> 2u;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* Set all accumulators to zero */
       acc0 = 0;
@@ -337,7 +337,7 @@ void arm_correlate_fast_q15(
         /* acc3 +=  x[5] * y[2] + x[6] * y[3] */
         acc3 = __SMLAD(x1, c0, acc3);
 
-      } while(--k);
+      } while (--k);
 
       /* For the next MAC operations, SIMD is not used   
        * So, the 16 bit pointer if inputB, py is updated */
@@ -346,7 +346,7 @@ void arm_correlate_fast_q15(
        ** No loop unrolling is used. */
       k = srcBLen % 0x4u;
 
-      if(k == 1u)
+      if (k == 1u)
       {
         /* Read y[4] */
         c0 = *py;
@@ -371,7 +371,7 @@ void arm_correlate_fast_q15(
         acc3 = __SMLADX(x3, c0, acc3);
       }
 
-      if(k == 2u)
+      if (k == 2u)
       {
         /* Read y[4], y[5] */
         c0 = *__SIMD32(py);
@@ -390,7 +390,7 @@ void arm_correlate_fast_q15(
         acc3 = __SMLAD(x2, c0, acc3);
       }
 
-      if(k == 3u)
+      if (k == 3u)
       {
         /* Read y[4], y[5] */
         c0 = *__SIMD32(py)++;
@@ -458,7 +458,7 @@ void arm_correlate_fast_q15(
      ** No loop unrolling is used. */
     blkCnt = blockSize2 % 0x4u;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* Accumulator is made zero for every iteration */
       sum = 0;
@@ -468,7 +468,7 @@ void arm_correlate_fast_q15(
 
       /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.   
        ** a second loop below computes MACs for the remaining 1 to 3 samples. */
-      while(k > 0u)
+      while (k > 0u)
       {
         /* Perform the multiply-accumulates */
         sum += ((q31_t) * px++ * *py++);
@@ -484,7 +484,7 @@ void arm_correlate_fast_q15(
        ** No loop unrolling is used. */
       k = srcBLen % 0x4u;
 
-      while(k > 0u)
+      while (k > 0u)
       {
         /* Perform the multiply-accumulates */
         sum += ((q31_t) * px++ * *py++);
@@ -515,7 +515,7 @@ void arm_correlate_fast_q15(
      * the blockSize2 loop cannot be unrolled by 4 */
     blkCnt = blockSize2;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* Accumulator is made zero for every iteration */
       sum = 0;
@@ -523,7 +523,7 @@ void arm_correlate_fast_q15(
       /* Loop over srcBLen */
       k = srcBLen;
 
-      while(k > 0u)
+      while (k > 0u)
       {
         /* Perform the multiply-accumulate */
         sum += ((q31_t) * px++ * *py++);
@@ -575,7 +575,7 @@ void arm_correlate_fast_q15(
    * Stage3 process   
    * ------------------*/
 
-  while(blockSize3 > 0u)
+  while (blockSize3 > 0u)
   {
     /* Accumulator is made zero for every iteration */
     sum = 0;
@@ -585,7 +585,7 @@ void arm_correlate_fast_q15(
 
     /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.   
      ** a second loop below computes MACs for the remaining 1 to 3 samples. */
-    while(k > 0u)
+    while (k > 0u)
     {
       /* Perform the multiply-accumulates */
       /* sum += x[srcALen - srcBLen + 4] * y[3] , sum += x[srcALen - srcBLen + 3] * y[2] */
@@ -601,7 +601,7 @@ void arm_correlate_fast_q15(
      ** No loop unrolling is used. */
     k = count % 0x4u;
 
-    while(k > 0u)
+    while (k > 0u)
     {
       /* Perform the multiply-accumulates */
       sum = __SMLAD(*px++, *py++, sum);
@@ -654,7 +654,7 @@ void arm_correlate_fast_q15(
    * (srcALen - srcBLen) zeroes has to included in the starting of the output buffer */
   /* If srcALen < srcBLen,   
    * (srcALen - srcBLen) zeroes has to included in the ending of the output buffer */
-  if(srcALen >= srcBLen)
+  if (srcALen >= srcBLen)
   {
     /* Initialization of inputA pointer */
     pIn1 = (pSrcA);
@@ -736,7 +736,7 @@ void arm_correlate_fast_q15(
    * ----------------------*/
 
   /* The first loop starts here */
-  while(blockSize1 > 0u)
+  while (blockSize1 > 0u)
   {
     /* Accumulator is made zero for every iteration */
     sum = 0;
@@ -746,7 +746,7 @@ void arm_correlate_fast_q15(
 
     /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.   
      ** a second loop below computes MACs for the remaining 1 to 3 samples. */
-    while(k > 0u)
+    while (k > 0u)
     {
       /* x[0] * y[srcBLen - 4] , x[1] * y[srcBLen - 3] */
         sum += ((q31_t) * px++ * *py++);
@@ -762,7 +762,7 @@ void arm_correlate_fast_q15(
      ** No loop unrolling is used. */
     k = count % 0x4u;
 
-    while(k > 0u)
+    while (k > 0u)
     {
       /* Perform the multiply-accumulates */
       /* x[0] * y[srcBLen - 1] */
@@ -814,12 +814,12 @@ void arm_correlate_fast_q15(
   /* Stage2 depends on srcBLen as in this stage srcBLen number of MACS are performed.   
    * So, to loop unroll over blockSize2,   
    * srcBLen should be greater than or equal to 4, to loop unroll the srcBLen loop */
-  if(srcBLen >= 4u)
+  if (srcBLen >= 4u)
   {
     /* Loop unroll over blockSize2, by 4 */
     blkCnt = blockSize2 >> 2u;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* Set all accumulators to zero */
       acc0 = 0;
@@ -947,7 +947,7 @@ void arm_correlate_fast_q15(
         /* acc3 +=  x[5] * y[2] + x[6] * y[3] */
         acc3 = __SMLAD(x1, c0, acc3);
 
-      } while(--k);
+      } while (--k);
 
       /* For the next MAC operations, SIMD is not used   
        * So, the 16 bit pointer if inputB, py is updated */
@@ -956,7 +956,7 @@ void arm_correlate_fast_q15(
        ** No loop unrolling is used. */
       k = srcBLen % 0x4u;
 
-      if(k == 1u)
+      if (k == 1u)
       {
         /* Read y[4] */
         c0 = *py;
@@ -995,7 +995,7 @@ void arm_correlate_fast_q15(
         acc3 = __SMLADX(x3, c0, acc3);
       }
 
-      if(k == 2u)
+      if (k == 2u)
       {
         /* Read y[4], y[5] */
 		  a = *py;
@@ -1038,7 +1038,7 @@ void arm_correlate_fast_q15(
         acc3 = __SMLAD(x2, c0, acc3);
       }
 
-      if(k == 3u)
+      if (k == 3u)
       {
         /* Read y[4], y[5] */
 		  a = *py;
@@ -1142,7 +1142,7 @@ void arm_correlate_fast_q15(
      ** No loop unrolling is used. */
     blkCnt = blockSize2 % 0x4u;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* Accumulator is made zero for every iteration */
       sum = 0;
@@ -1152,7 +1152,7 @@ void arm_correlate_fast_q15(
 
       /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.   
        ** a second loop below computes MACs for the remaining 1 to 3 samples. */
-      while(k > 0u)
+      while (k > 0u)
       {
         /* Perform the multiply-accumulates */
         sum += ((q31_t) * px++ * *py++);
@@ -1168,7 +1168,7 @@ void arm_correlate_fast_q15(
        ** No loop unrolling is used. */
       k = srcBLen % 0x4u;
 
-      while(k > 0u)
+      while (k > 0u)
       {
         /* Perform the multiply-accumulates */
         sum += ((q31_t) * px++ * *py++);
@@ -1199,7 +1199,7 @@ void arm_correlate_fast_q15(
      * the blockSize2 loop cannot be unrolled by 4 */
     blkCnt = blockSize2;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* Accumulator is made zero for every iteration */
       sum = 0;
@@ -1207,7 +1207,7 @@ void arm_correlate_fast_q15(
       /* Loop over srcBLen */
       k = srcBLen;
 
-      while(k > 0u)
+      while (k > 0u)
       {
         /* Perform the multiply-accumulate */
         sum += ((q31_t) * px++ * *py++);
@@ -1259,7 +1259,7 @@ void arm_correlate_fast_q15(
    * Stage3 process   
    * ------------------*/
 
-  while(blockSize3 > 0u)
+  while (blockSize3 > 0u)
   {
     /* Accumulator is made zero for every iteration */
     sum = 0;
@@ -1269,7 +1269,7 @@ void arm_correlate_fast_q15(
 
     /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.   
      ** a second loop below computes MACs for the remaining 1 to 3 samples. */
-    while(k > 0u)
+    while (k > 0u)
     {
       /* Perform the multiply-accumulates */
         sum += ((q31_t) * px++ * *py++);
@@ -1285,7 +1285,7 @@ void arm_correlate_fast_q15(
      ** No loop unrolling is used. */
     k = count % 0x4u;
 
-    while(k > 0u)
+    while (k > 0u)
     {
       /* Perform the multiply-accumulates */
         sum += ((q31_t) * px++ * *py++);

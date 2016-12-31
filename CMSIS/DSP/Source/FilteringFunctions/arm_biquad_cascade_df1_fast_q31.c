@@ -117,7 +117,7 @@ void arm_biquad_cascade_df1_fast_q31(
 
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.       
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while(sample > 0u)
+    while (sample > 0u)
     {
       /* Read the input */
       Xn = *pIn;
@@ -241,7 +241,7 @@ void arm_biquad_cascade_df1_fast_q31(
      ** No loop unrolling is used. */
     sample = (blockSize & 0x3u);
 
-   while(sample > 0u)
+   while (sample > 0u)
    {
       /* Read the input */
       Xn = *pIn++;
@@ -297,7 +297,7 @@ void arm_biquad_cascade_df1_fast_q31(
     *pState++ = Yn1;
     *pState++ = Yn2;
 
-  } while(--stage);
+  } while (--stage);
 }
 
 /**    

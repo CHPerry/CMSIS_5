@@ -94,7 +94,7 @@ arm_status arm_mat_inverse_f32(
   uint32_t numRows = pSrc->numRows;              /* Number of rows in the matrix  */
   uint32_t numCols = pSrc->numCols;              /* Number of Cols in the matrix  */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
   float32_t maxC;                                /* maximum value in the column */
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
@@ -107,7 +107,7 @@ arm_status arm_mat_inverse_f32(
 
 
   /* Check for matrix mismatch condition */
-  if((pSrc->numRows != pSrc->numCols) || (pDst->numRows != pDst->numCols)
+  if ((pSrc->numRows != pSrc->numCols) || (pDst->numRows != pDst->numCols)
      || (pSrc->numRows != pDst->numRows))
   {
     /* Set status as ARM_MATH_SIZE_MISMATCH */
@@ -161,11 +161,11 @@ arm_status arm_mat_inverse_f32(
     rowCnt = numRows;
 
     /* Making the destination matrix as identity matrix */
-    while(rowCnt > 0u)
+    while (rowCnt > 0u)
     {
       /* Writing all zeroes in lower triangle of the destination matrix */
       j = numRows - rowCnt;
-      while(j > 0u)
+      while (j > 0u)
       {
         *pOutT1++ = 0.0f;
         j--;
@@ -176,7 +176,7 @@ arm_status arm_mat_inverse_f32(
 
       /* Writing all zeroes in upper triangle of the destination matrix */
       j = rowCnt - 1u;
-      while(j > 0u)
+      while (j > 0u)
       {
         *pOutT1++ = 0.0f;
         j--;
@@ -193,7 +193,7 @@ arm_status arm_mat_inverse_f32(
     /* Index modifier to navigate through the columns */
     l = 0u;
 
-    while(loopCnt > 0u)
+    while (loopCnt > 0u)
     {
       /* Check if the pivot element is zero..    
        * If it is zero then interchange the row with non zero row below.    
@@ -220,7 +220,7 @@ arm_status arm_mat_inverse_f32(
       }
 
       /* Update the status if the matrix is singular */
-      if(maxC == 0.0f)
+      if (maxC == 0.0f)
       {
         return ARM_MATH_SINGULAR;
       }
@@ -232,12 +232,12 @@ arm_status arm_mat_inverse_f32(
       k = 1u;
       
       /* Check if the pivot element is the most significant of the column */
-      if( (in > 0.0f ? in : -in) != maxC)
+      if ( (in > 0.0f ? in : -in) != maxC)
       {
         /* Loop over the number rows present below */
         i = numRows - (l + 1u);
 
-        while(i > 0u)
+        while (i > 0u)
         {
           /* Update the input and destination pointers */
           pInT2 = pInT1 + (numCols * l);
@@ -245,13 +245,13 @@ arm_status arm_mat_inverse_f32(
 
           /* Look for the most significant element to    
            * replace in the rows below */
-          if((*pInT2 > 0.0f ? *pInT2: -*pInT2) == maxC)
+          if ((*pInT2 > 0.0f ? *pInT2: -*pInT2) == maxC)
           {
             /* Loop over number of columns    
              * to the right of the pilot element */
             j = numCols - l;
 
-            while(j > 0u)
+            while (j > 0u)
             {
               /* Exchange the row elements of the input matrix */
               Xchg = *pInT2;
@@ -265,7 +265,7 @@ arm_status arm_mat_inverse_f32(
             /* Loop over number of columns of the destination matrix */
             j = numCols;
 
-            while(j > 0u)
+            while (j > 0u)
             {
               /* Exchange the row elements of the destination matrix */
               Xchg = *pOutT2;
@@ -292,7 +292,7 @@ arm_status arm_mat_inverse_f32(
       }
 
       /* Update the status if the matrix is singular */
-      if((flag != 1u) && (in == 0.0f))
+      if ((flag != 1u) && (in == 0.0f))
       {
         return ARM_MATH_SINGULAR;
       }
@@ -312,7 +312,7 @@ arm_status arm_mat_inverse_f32(
        * to the right of the pilot element */
       j = (numCols - l);
 
-      while(j > 0u)
+      while (j > 0u)
       {
         /* Divide each element of the row of the input matrix    
          * by the pivot element */
@@ -326,7 +326,7 @@ arm_status arm_mat_inverse_f32(
       /* Loop over number of columns of the destination matrix */
       j = numCols;
 
-      while(j > 0u)
+      while (j > 0u)
       {
         /* Divide each element of the row of the destination matrix    
          * by the pivot element */
@@ -351,10 +351,10 @@ arm_status arm_mat_inverse_f32(
       /*  to be replaced by the sum of that row and a multiple of row i */
       k = numRows;
 
-      while(k > 0u)
+      while (k > 0u)
       {
         /* Check for the pivot element */
-        if(i == l)
+        if (i == l)
         {
           /* If the processing element is the pivot element,    
              only the columns to the right are to be processed */
@@ -375,7 +375,7 @@ arm_status arm_mat_inverse_f32(
              to replace the elements in the input matrix */
           j = (numCols - l);
 
-          while(j > 0u)
+          while (j > 0u)
           {
             /* Replace the element by the sum of that row    
                and a multiple of the reference row  */
@@ -390,7 +390,7 @@ arm_status arm_mat_inverse_f32(
              replace the elements in the destination matrix */
           j = numCols;
 
-          while(j > 0u)
+          while (j > 0u)
           {
             /* Replace the element by the sum of that row    
                and a multiple of the reference row  */
@@ -435,7 +435,7 @@ arm_status arm_mat_inverse_f32(
 #ifdef ARM_MATH_MATRIX_CHECK
 
   /* Check for matrix mismatch condition */
-  if((pSrc->numRows != pSrc->numCols) || (pDst->numRows != pDst->numCols)
+  if ((pSrc->numRows != pSrc->numCols) || (pDst->numRows != pDst->numCols)
      || (pSrc->numRows != pDst->numRows))
   {
     /* Set status as ARM_MATH_SIZE_MISMATCH */
@@ -487,11 +487,11 @@ arm_status arm_mat_inverse_f32(
     rowCnt = numRows;
 
     /* Making the destination matrix as identity matrix */
-    while(rowCnt > 0u)
+    while (rowCnt > 0u)
     {
       /* Writing all zeroes in lower triangle of the destination matrix */
       j = numRows - rowCnt;
-      while(j > 0u)
+      while (j > 0u)
       {
         *pOutT1++ = 0.0f;
         j--;
@@ -502,7 +502,7 @@ arm_status arm_mat_inverse_f32(
 
       /* Writing all zeroes in upper triangle of the destination matrix */
       j = rowCnt - 1u;
-      while(j > 0u)
+      while (j > 0u)
       {
         *pOutT1++ = 0.0f;
         j--;
@@ -519,7 +519,7 @@ arm_status arm_mat_inverse_f32(
     /* Index modifier to navigate through the columns */
     l = 0u;
     //for(loopCnt = 0u; loopCnt < numCols; loopCnt++)   
-    while(loopCnt > 0u)
+    while (loopCnt > 0u)
     {
       /* Check if the pivot element is zero..    
        * If it is zero then interchange the row with non zero row below.   
@@ -541,7 +541,7 @@ arm_status arm_mat_inverse_f32(
       k = 1u;
 
       /* Check if the pivot element is zero */
-      if(*pInT1 == 0.0f)
+      if (*pInT1 == 0.0f)
       {
         /* Loop over the number rows present below */
         for (i = (l + 1u); i < numRows; i++)
@@ -552,7 +552,7 @@ arm_status arm_mat_inverse_f32(
 
           /* Check if there is a non zero pivot element to     
            * replace in the rows below */
-          if(*pInT2 != 0.0f)
+          if (*pInT2 != 0.0f)
           {
             /* Loop over number of columns     
              * to the right of the pilot element */
@@ -584,7 +584,7 @@ arm_status arm_mat_inverse_f32(
       }
 
       /* Update the status if the matrix is singular */
-      if((flag != 1u) && (in == 0.0f))
+      if ((flag != 1u) && (in == 0.0f))
       {
         return ARM_MATH_SINGULAR;
       }
@@ -627,7 +627,7 @@ arm_status arm_mat_inverse_f32(
       for (i = 0u; i < numRows; i++)
       {
         /* Check for the pivot element */
-        if(i == l)
+        if (i == l)
         {
           /* If the processing element is the pivot element,     
              only the columns to the right are to be processed */
@@ -676,12 +676,12 @@ arm_status arm_mat_inverse_f32(
     }
 
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
     /* Set status as ARM_MATH_SUCCESS */
     status = ARM_MATH_SUCCESS;
 
-    if((flag != 1u) && (in == 0.0f))
+    if ((flag != 1u) && (in == 0.0f))
     {
       pIn = pSrc->pData;
       for (i = 0; i < numRows * numCols; i++)

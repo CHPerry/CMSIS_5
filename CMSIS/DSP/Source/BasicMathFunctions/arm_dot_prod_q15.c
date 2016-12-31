@@ -75,7 +75,7 @@ void arm_dot_prod_q15(
   q63_t sum = 0;                                 /* Temporary result storage */
   uint32_t blkCnt;                               /* loop counter */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
 /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -85,7 +85,7 @@ void arm_dot_prod_q15(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+ A[blockSize-1]* B[blockSize-1] */
     /* Calculate dot product and then store the result in a temporary buffer. */
@@ -100,7 +100,7 @@ void arm_dot_prod_q15(
    ** No loop unrolling is used. */
   blkCnt = blockSize % 0x4u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+ A[blockSize-1]* B[blockSize-1] */
     /* Calculate dot product and then store the results in a temporary buffer. */
@@ -118,7 +118,7 @@ void arm_dot_prod_q15(
   /* Initialize blkCnt with number of samples */
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+ A[blockSize-1]* B[blockSize-1] */
     /* Calculate dot product and then store the results in a temporary buffer. */
@@ -128,7 +128,7 @@ void arm_dot_prod_q15(
     blkCnt--;
   }
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
   /* Store the result in the destination buffer in 34.30 format */
   *result = sum;

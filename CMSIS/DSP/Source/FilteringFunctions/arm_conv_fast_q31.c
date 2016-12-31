@@ -96,7 +96,7 @@ void arm_conv_fast_q31(
   /* The algorithm implementation is based on the lengths of the inputs. */
   /* srcB is always made to slide across srcA. */
   /* So srcBLen is always considered as shorter or equal to srcALen */
-  if(srcALen >= srcBLen)
+  if (srcALen >= srcBLen)
   {
     /* Initialization of inputA pointer */
     pIn1 = pSrcA;
@@ -159,7 +159,7 @@ void arm_conv_fast_q31(
    * ----------------------*/
 
   /* The first stage starts here */
-  while(blockSize1 > 0u)
+  while (blockSize1 > 0u)
   {
     /* Accumulator is made zero for every iteration */
     sum = 0;
@@ -169,7 +169,7 @@ void arm_conv_fast_q31(
 
     /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.    
      ** a second loop below computes MACs for the remaining 1 to 3 samples. */
-    while(k > 0u)
+    while (k > 0u)
     {
       /* x[0] * y[srcBLen - 1] */
       sum = (q31_t) ((((q63_t) sum << 32) +
@@ -195,7 +195,7 @@ void arm_conv_fast_q31(
      ** No loop unrolling is used. */
     k = count % 0x4u;
 
-    while(k > 0u)
+    while (k > 0u)
     {
       /* Perform the multiply-accumulate */
       sum = (q31_t) ((((q63_t) sum << 32) +
@@ -246,12 +246,12 @@ void arm_conv_fast_q31(
   /* Stage2 depends on srcBLen as in this stage srcBLen number of MACS are performed.    
    * So, to loop unroll over blockSize2,    
    * srcBLen should be greater than or equal to 4 */
-  if(srcBLen >= 4u)
+  if (srcBLen >= 4u)
   {
     /* Loop unroll over blockSize2, by 4 */
     blkCnt = blockSize2 >> 2u;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* Set all accumulators to zero */
       acc0 = 0;
@@ -339,13 +339,13 @@ void arm_conv_fast_q31(
         acc3 = (q31_t) ((((q63_t) acc3 << 32) + ((q63_t) x2 * c0)) >> 32);
 
 
-      } while(--k);
+      } while (--k);
 
       /* If the srcBLen is not a multiple of 4, compute any remaining MACs here.    
        ** No loop unrolling is used. */
       k = srcBLen % 0x4u;
 
-      while(k > 0u)
+      while (k > 0u)
       {
         /* Read y[srcBLen - 5] sample */
         c0 = *(py--);
@@ -393,7 +393,7 @@ void arm_conv_fast_q31(
      ** No loop unrolling is used. */
     blkCnt = blockSize2 % 0x4u;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* Accumulator is made zero for every iteration */
       sum = 0;
@@ -403,7 +403,7 @@ void arm_conv_fast_q31(
 
       /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.    
        ** a second loop below computes MACs for the remaining 1 to 3 samples. */
-      while(k > 0u)
+      while (k > 0u)
       {
         /* Perform the multiply-accumulates */
         sum = (q31_t) ((((q63_t) sum << 32) +
@@ -423,7 +423,7 @@ void arm_conv_fast_q31(
        ** No loop unrolling is used. */
       k = srcBLen % 0x4u;
 
-      while(k > 0u)
+      while (k > 0u)
       {
         /* Perform the multiply-accumulate */
         sum = (q31_t) ((((q63_t) sum << 32) +
@@ -453,7 +453,7 @@ void arm_conv_fast_q31(
      * the blockSize2 loop cannot be unrolled by 4 */
     blkCnt = blockSize2;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* Accumulator is made zero for every iteration */
       sum = 0;
@@ -461,7 +461,7 @@ void arm_conv_fast_q31(
       /* srcBLen number of MACS should be performed */
       k = srcBLen;
 
-      while(k > 0u)
+      while (k > 0u)
       {
         /* Perform the multiply-accumulate */
         sum = (q31_t) ((((q63_t) sum << 32) +
@@ -513,7 +513,7 @@ void arm_conv_fast_q31(
    * Stage3 process    
    * ------------------*/
 
-  while(blockSize3 > 0u)
+  while (blockSize3 > 0u)
   {
     /* Accumulator is made zero for every iteration */
     sum = 0;
@@ -523,7 +523,7 @@ void arm_conv_fast_q31(
 
     /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.    
      ** a second loop below computes MACs for the remaining 1 to 3 samples. */
-    while(k > 0u)
+    while (k > 0u)
     {
       /* sum += x[srcALen - srcBLen + 1] * y[srcBLen - 1] */
       sum = (q31_t) ((((q63_t) sum << 32) +
@@ -549,7 +549,7 @@ void arm_conv_fast_q31(
      ** No loop unrolling is used. */
     k = blockSize3 % 0x4u;
 
-    while(k > 0u)
+    while (k > 0u)
     {
       /* Perform the multiply-accumulate */
       sum = (q31_t) ((((q63_t) sum << 32) +

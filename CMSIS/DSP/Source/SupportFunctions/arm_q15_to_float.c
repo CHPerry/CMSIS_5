@@ -83,7 +83,7 @@ void arm_q15_to_float(
   uint32_t blkCnt;                               /* loop counter */
 
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -92,7 +92,7 @@ void arm_q15_to_float(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = (float32_t) A / 32768 */
     /* convert from q15 to float and then store the results in the destination buffer */
@@ -116,9 +116,9 @@ void arm_q15_to_float(
   /* Loop over blockSize number of values */
   blkCnt = blockSize;
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = (float32_t) A / 32768 */
     /* convert from q15 to float and then store the results in the destination buffer */

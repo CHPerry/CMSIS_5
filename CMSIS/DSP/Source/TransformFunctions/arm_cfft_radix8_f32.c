@@ -227,9 +227,9 @@ uint16_t twidCoefModifier)
          pSrc[2 * i4 + 1] = t2 + r8;
          
          i1 += n1;
-      } while(i1 < fftLen);
+      } while (i1 < fftLen);
       
-      if(n2 < 8)
+      if (n2 < 8)
          break;
       
       ia1 = 0;
@@ -370,13 +370,13 @@ uint16_t twidCoefModifier)
             pSrc[2 * i4 + 1] = p3 - p4;
             
             i1 += n1;
-         } while(i1 < fftLen);
+         } while (i1 < fftLen);
          
          j++;
-      } while(j < n2);
+      } while (j < n2);
       
       twidCoefModifier <<= 3;
-   } while(n2 > 7);   
+   } while (n2 > 7);   
 }
 
 /**    

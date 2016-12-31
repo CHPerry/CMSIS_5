@@ -69,7 +69,7 @@ void arm_abs_q15(
 {
   uint32_t blkCnt;                               /* loop counter */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
   __SIMD32_TYPE *simd;
 
 /* Run the below code for Cortex-M4 and Cortex-M3 */
@@ -84,7 +84,7 @@ void arm_abs_q15(
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
    ** a second loop below computes the remaining 1 to 3 samples. */
   simd = __SIMD32_CONST(pDst);
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = |A| */
     /* Read two inputs */
@@ -135,7 +135,7 @@ void arm_abs_q15(
    ** No loop unrolling is used. */
   blkCnt = blockSize % 0x4u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = |A| */
     /* Read the input */
@@ -157,7 +157,7 @@ void arm_abs_q15(
   /* Initialize blkCnt with number of samples */
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = |A| */
     /* Read the input */
@@ -170,7 +170,7 @@ void arm_abs_q15(
     blkCnt--;
   }
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
 }
 

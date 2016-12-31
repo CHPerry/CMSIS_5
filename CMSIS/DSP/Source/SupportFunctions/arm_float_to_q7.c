@@ -86,7 +86,7 @@ void arm_float_to_q7(
 
 #endif /*      #ifdef ARM_MATH_ROUNDING        */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -95,7 +95,7 @@ void arm_float_to_q7(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
 
 #ifdef ARM_MATH_ROUNDING
@@ -140,7 +140,7 @@ void arm_float_to_q7(
    ** No loop unrolling is used. */
   blkCnt = blockSize % 0x4u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
 
 #ifdef ARM_MATH_ROUNDING
@@ -172,7 +172,7 @@ void arm_float_to_q7(
   /* Loop over blockSize number of values */
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
 #ifdef ARM_MATH_ROUNDING
     /* C = A * 128 */
@@ -194,7 +194,7 @@ void arm_float_to_q7(
     blkCnt--;
   }
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
 }
 

@@ -63,7 +63,7 @@ void arm_pid_init_q15(
   int32_t resetStateFlag)
 {
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -83,7 +83,7 @@ void arm_pid_init_q15(
 #endif /*      #ifndef  ARM_MATH_BIG_ENDIAN    */
 
   /* Check whether state needs reset or not */
-  if(resetStateFlag)
+  if (resetStateFlag)
   {
     /* Clear the state buffer.  The size will be always 3 samples */
     memset(S->state, 0, 3u * sizeof(q15_t));
@@ -107,13 +107,13 @@ void arm_pid_init_q15(
 
 
   /* Check whether state needs reset or not */
-  if(resetStateFlag)
+  if (resetStateFlag)
   {
     /* Clear the state buffer.  The size will be always 3 samples */
     memset(S->state, 0, 3u * sizeof(q15_t));
   }
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
 }
 

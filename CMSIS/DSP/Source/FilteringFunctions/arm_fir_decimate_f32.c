@@ -153,7 +153,7 @@ void arm_fir_decimate_f32(
   uint32_t numTaps = S->numTaps;                 /* Number of filter coefficients in the filter */
   uint32_t i, tapCnt, blkCnt, outBlockSize = blockSize / S->M;  /* Loop counters */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   uint32_t blkCntN4;
   float32_t *px0, *px1, *px2, *px3;
@@ -170,7 +170,7 @@ void arm_fir_decimate_f32(
   blkCnt = outBlockSize / 4;
   blkCntN4 = outBlockSize - (4 * blkCnt);
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Copy 4 * decimation factor number of new input samples into the state buffer */
     i = 4 * S->M;
@@ -179,7 +179,7 @@ void arm_fir_decimate_f32(
     {
       *pStateCurnt++ = *pSrc++;
 
-    } while(--i);
+    } while (--i);
 
     /* Set accumulators to zero */
     acc0 = 0.0f;
@@ -202,7 +202,7 @@ void arm_fir_decimate_f32(
     /* Loop over the number of taps.  Unroll by a factor of 4.       
      ** Repeat until we've computed numTaps-4 coefficients. */
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Read the b[numTaps-1] coefficient */
       c0 = *(pb++);
@@ -274,7 +274,7 @@ void arm_fir_decimate_f32(
     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
     tapCnt = numTaps % 0x4u;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Read coefficients */
       c0 = *(pb++);
@@ -309,7 +309,7 @@ void arm_fir_decimate_f32(
     blkCnt--;
   }
 
-  while(blkCntN4 > 0u)
+  while (blkCntN4 > 0u)
   {
     /* Copy decimation factor number of new input samples into the state buffer */
     i = S->M;
@@ -318,7 +318,7 @@ void arm_fir_decimate_f32(
     {
       *pStateCurnt++ = *pSrc++;
 
-    } while(--i);
+    } while (--i);
 
     /* Set accumulator to zero */
     sum0 = 0.0f;
@@ -334,7 +334,7 @@ void arm_fir_decimate_f32(
 
     /* Loop over the number of taps.  Unroll by a factor of 4.       
      ** Repeat until we've computed numTaps-4 coefficients. */
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Read the b[numTaps-1] coefficient */
       c0 = *(pb++);
@@ -379,7 +379,7 @@ void arm_fir_decimate_f32(
     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
     tapCnt = numTaps % 0x4u;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Read coefficients */
       c0 = *(pb++);
@@ -415,7 +415,7 @@ void arm_fir_decimate_f32(
   i = (numTaps - 1u) >> 2;
 
   /* copy data */
-  while(i > 0u)
+  while (i > 0u)
   {
     *pStateCurnt++ = *pState++;
     *pStateCurnt++ = *pState++;
@@ -429,7 +429,7 @@ void arm_fir_decimate_f32(
   i = (numTaps - 1u) % 0x04u;
 
   /* copy data */
-  while(i > 0u)
+  while (i > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -448,7 +448,7 @@ void arm_fir_decimate_f32(
   /* Total number of output samples to be computed */
   blkCnt = outBlockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Copy decimation factor number of new input samples into the state buffer */
     i = S->M;
@@ -457,7 +457,7 @@ void arm_fir_decimate_f32(
     {
       *pStateCurnt++ = *pSrc++;
 
-    } while(--i);
+    } while (--i);
 
     /* Set accumulator to zero */
     sum0 = 0.0f;
@@ -470,7 +470,7 @@ void arm_fir_decimate_f32(
 
     tapCnt = numTaps;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Read coefficients */
       c0 = *pb++;
@@ -507,7 +507,7 @@ void arm_fir_decimate_f32(
   i = (numTaps - 1u);
 
   /* copy data */
-  while(i > 0u)
+  while (i > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -515,7 +515,7 @@ void arm_fir_decimate_f32(
     i--;
   }
 
-#endif /*   #ifndef ARM_MATH_CM0_FAMILY        */
+#endif /*   #if defined(ARM_MATH_DSP)        */
 
 }
 

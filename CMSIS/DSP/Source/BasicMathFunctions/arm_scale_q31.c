@@ -76,7 +76,7 @@ void arm_scale_q31(
   uint32_t blkCnt;                               /* loop counter */
   q31_t in, out;
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
 /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -87,11 +87,11 @@ void arm_scale_q31(
   /*loop Unrolling */
   blkCnt = blockSize >> 2u;
 
-  if(sign == 0u)
+  if (sign == 0u)
   {
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.       
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* read four inputs from source */
       in1 = *pSrc;
@@ -110,10 +110,10 @@ void arm_scale_q31(
       out2 = in2 << kShift;
 
       /* saturate the results. */
-      if(in1 != (out1 >> kShift))
+      if (in1 != (out1 >> kShift))
         out1 = 0x7FFFFFFF ^ (in1 >> 31);
 
-      if(in2 != (out2 >> kShift))
+      if (in2 != (out2 >> kShift))
         out2 = 0x7FFFFFFF ^ (in2 >> 31);
 
       out3 = in3 << kShift;
@@ -122,10 +122,10 @@ void arm_scale_q31(
       *pDst = out1;
       *(pDst + 1) = out2;
 
-      if(in3 != (out3 >> kShift))
+      if (in3 != (out3 >> kShift))
         out3 = 0x7FFFFFFF ^ (in3 >> 31);
 
-      if(in4 != (out4 >> kShift))
+      if (in4 != (out4 >> kShift))
         out4 = 0x7FFFFFFF ^ (in4 >> 31);
 
       /* Store result destination */
@@ -145,7 +145,7 @@ void arm_scale_q31(
   {
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.       
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* read four inputs from source */
       in1 = *pSrc;
@@ -192,11 +192,11 @@ void arm_scale_q31(
   /* Initialize blkCnt with number of samples */
   blkCnt = blockSize;
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
-  if(sign == 0)
+  if (sign == 0)
   {
-	  while(blkCnt > 0u)
+	  while (blkCnt > 0u)
 	  {
 		/* C = A * scale */
 		/* Scale the input and then store the result in the destination buffer. */
@@ -205,7 +205,7 @@ void arm_scale_q31(
 
 		out = in << kShift;
 		
-		if(in != (out >> kShift))
+		if (in != (out >> kShift))
 			out = 0x7FFFFFFF ^ (in >> 31);
 
 		*pDst++ = out;
@@ -216,7 +216,7 @@ void arm_scale_q31(
   }
   else
   {
-	  while(blkCnt > 0u)
+	  while (blkCnt > 0u)
 	  {
 		/* C = A * scale */
 		/* Scale the input and then store the result in the destination buffer. */

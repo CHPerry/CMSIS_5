@@ -112,7 +112,7 @@ void arm_dct4_q31(
   /* pbuff initialized to input buffer */
   pbuff = pInlineBuffer;
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -140,7 +140,7 @@ void arm_dct4_q31(
 
     /* Decrement the loop counter */
     i--;
-  } while(i > 0u);
+  } while (i > 0u);
 
   /* pbuff initialized to input buffer */
   pbuff = pInlineBuffer;
@@ -163,7 +163,7 @@ void arm_dct4_q31(
 
     /* Decrement the loop counter */
     i--;
-  } while(i > 0u);
+  } while (i > 0u);
 
 
   /* ---------------------------------------------------------    
@@ -229,13 +229,13 @@ void arm_dct4_q31(
 
     /* Decrement the loop counter */
     i--;
-  } while(i > 0u);
+  } while (i > 0u);
 
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.    
    ** No loop unrolling is used. */
   i = (S->N - 1u) % 0x4u;
 
-  while(i > 0u)
+  while (i > 0u)
   {
     /* Calculating Y4(1) to Y4(N-1) from Y2 using equation Y4(k) = Y2(k) - Y4(k-1) */
     /* pState pointer (pS1) is incremented twice as the real values are located alternatively in the array */
@@ -275,7 +275,7 @@ void arm_dct4_q31(
 
     /* Decrement the loop counter */
     i--;
-  } while(i > 0u);
+  } while (i > 0u);
 
 
 #else
@@ -295,7 +295,7 @@ void arm_dct4_q31(
 
     /* Decrement the loop counter */
     i--;
-  } while(i > 0u);
+  } while (i > 0u);
 
   /* pbuff initialized to input buffer */
   pbuff = pInlineBuffer;
@@ -313,7 +313,7 @@ void arm_dct4_q31(
 
     /* Decrement the loop counter */
     i--;
-  } while(i > 0u);
+  } while (i > 0u);
 
 
   /* ---------------------------------------------------------    
@@ -354,7 +354,7 @@ void arm_dct4_q31(
   /* Initializing the loop counter */
   i = (S->N - 1u);
 
-  while(i > 0u)
+  while (i > 0u)
   {
     /* Calculating Y4(1) to Y4(N-1) from Y2 using equation Y4(k) = Y2(k) - Y4(k-1) */
     /* pState pointer (pS1) is incremented twice as the real values are located alternatively in the array */
@@ -384,9 +384,9 @@ void arm_dct4_q31(
 
     /* Decrement the loop counter */
     i--;
-  } while(i > 0u);
+  } while (i > 0u);
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
 }
 

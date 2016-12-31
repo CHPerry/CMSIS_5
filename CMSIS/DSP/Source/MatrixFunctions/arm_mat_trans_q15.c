@@ -68,7 +68,7 @@ arm_status arm_mat_trans_q15(
   uint16_t col, row = nRows, i = 0u;             /* row and column loop counters */
   arm_status status;                             /* status of matrix transpose */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 #ifndef UNALIGNED_SUPPORT_DISABLE
@@ -85,7 +85,7 @@ arm_status arm_mat_trans_q15(
 
 
   /* Check for matrix mismatch condition */
-  if((pSrc->numRows != pDst->numCols) || (pSrc->numCols != pDst->numRows))
+  if ((pSrc->numRows != pDst->numCols) || (pSrc->numCols != pDst->numRows))
   {
     /* Set status as ARM_MATH_SIZE_MISMATCH */
     status = ARM_MATH_SIZE_MISMATCH;
@@ -107,7 +107,7 @@ arm_status arm_mat_trans_q15(
 
       /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
        ** a second loop below computes the remaining 1 to 3 samples. */
-      while(col > 0u)
+      while (col > 0u)
       {
 #ifndef UNALIGNED_SUPPORT_DISABLE
 
@@ -232,7 +232,7 @@ arm_status arm_mat_trans_q15(
 #ifdef ARM_MATH_MATRIX_CHECK
 
   /* Check for matrix mismatch condition */
-  if((pSrc->numRows != pDst->numCols) || (pSrc->numCols != pDst->numRows))
+  if ((pSrc->numRows != pDst->numCols) || (pSrc->numCols != pDst->numRows))
   {
     /* Set status as ARM_MATH_SIZE_MISMATCH */
     status = ARM_MATH_SIZE_MISMATCH;
@@ -251,9 +251,9 @@ arm_status arm_mat_trans_q15(
       /* Initialize column loop counter */
       col = nColumns;
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
-      while(col > 0u)
+      while (col > 0u)
       {
         /* Read and store the input element in the destination */
         *pOut = *pSrcA++;
@@ -270,7 +270,7 @@ arm_status arm_mat_trans_q15(
       /* Decrement the row loop counter */
       row--;
 
-    } while(row > 0u);
+    } while (row > 0u);
 
     /* set status as ARM_MATH_SUCCESS */
     status = ARM_MATH_SUCCESS;

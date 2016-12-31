@@ -82,7 +82,7 @@ void arm_cfft_radix2_q15(
   q15_t * pSrc)
 {
 
-  if(S->ifftFlag == 1u)
+  if (S->ifftFlag == 1u)
   {
     arm_radix2_butterfly_inverse_q15(pSrc, S->fftLen,
                                      S->pTwiddle, S->twidCoefModifier);
@@ -106,7 +106,7 @@ void arm_radix2_butterfly_q15(
   q15_t * pCoef,
   uint16_t twidCoefModifier)
 {
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   unsigned i, j, k, l;
   unsigned n1, n2, ia;
@@ -424,7 +424,7 @@ void arm_radix2_butterfly_q15(
 
   twidCoefModifier = twidCoefModifier << 1u;
 
-#endif //             #ifndef ARM_MATH_CM0_FAMILY
+#endif //             #if defined(ARM_MATH_DSP)
 
 }
 
@@ -435,7 +435,7 @@ void arm_radix2_butterfly_inverse_q15(
   q15_t * pCoef,
   uint16_t twidCoefModifier)
 {
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   unsigned i, j, k, l;
   unsigned n1, n2, ia;
@@ -737,6 +737,6 @@ void arm_radix2_butterfly_inverse_q15(
   }                             // groups loop end 
 
 
-#endif //             #ifndef ARM_MATH_CM0_FAMILY
+#endif //             #if defined(ARM_MATH_DSP)
 
 }

@@ -63,7 +63,7 @@ void arm_pid_init_q31(
   int32_t resetStateFlag)
 {
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -88,13 +88,13 @@ void arm_pid_init_q31(
   temp = clip_q63_to_q31((q63_t) S->Kd + S->Kd);
   S->A1 = -clip_q63_to_q31((q63_t) temp + S->Kp);
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
   /* Derived coefficient A2 */
   S->A2 = S->Kd;
 
   /* Check whether state needs reset or not */
-  if(resetStateFlag)
+  if (resetStateFlag)
   {
     /* Clear the state buffer.  The size will be always 3 samples */
     memset(S->state, 0, 3u * sizeof(q31_t));

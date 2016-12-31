@@ -102,7 +102,7 @@ void arm_fir_decimate_fast_q31(
   blkCnt = outBlockSize / 2;
   blkCntN2 = outBlockSize - (2 * blkCnt);
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Copy decimation factor number of new input samples into the state buffer */
     i = 2 * S->M;
@@ -111,7 +111,7 @@ void arm_fir_decimate_fast_q31(
     {
       *pStateCurnt++ = *pSrc++;
 
-    } while(--i);
+    } while (--i);
 
     /* Set accumulator to zero */
     acc0 = 0;
@@ -129,7 +129,7 @@ void arm_fir_decimate_fast_q31(
 
     /* Loop over the number of taps.  Unroll by a factor of 4.       
      ** Repeat until we've computed numTaps-4 coefficients. */
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Read the b[numTaps-1] coefficient */
       c0 = *(pb);
@@ -188,7 +188,7 @@ void arm_fir_decimate_fast_q31(
     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
     tapCnt = numTaps % 0x4u;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Read coefficients */
       c0 = *(pb++);
@@ -217,7 +217,7 @@ void arm_fir_decimate_fast_q31(
     blkCnt--;
   }
 
-  while(blkCntN2 > 0u)
+  while (blkCntN2 > 0u)
   {
     /* Copy decimation factor number of new input samples into the state buffer */
     i = S->M;
@@ -226,7 +226,7 @@ void arm_fir_decimate_fast_q31(
     {
       *pStateCurnt++ = *pSrc++;
 
-    } while(--i);
+    } while (--i);
 
     /* Set accumulator to zero */
     sum0 = 0;
@@ -242,7 +242,7 @@ void arm_fir_decimate_fast_q31(
 
     /* Loop over the number of taps.  Unroll by a factor of 4.       
      ** Repeat until we've computed numTaps-4 coefficients. */
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Read the b[numTaps-1] coefficient */
       c0 = *(pb++);
@@ -287,7 +287,7 @@ void arm_fir_decimate_fast_q31(
     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
     tapCnt = numTaps % 0x4u;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Read coefficients */
       c0 = *(pb++);
@@ -323,7 +323,7 @@ void arm_fir_decimate_fast_q31(
   i = (numTaps - 1u) >> 2u;
 
   /* copy data */
-  while(i > 0u)
+  while (i > 0u)
   {
     *pStateCurnt++ = *pState++;
     *pStateCurnt++ = *pState++;
@@ -337,7 +337,7 @@ void arm_fir_decimate_fast_q31(
   i = (numTaps - 1u) % 0x04u;
 
   /* copy data */
-  while(i > 0u)
+  while (i > 0u)
   {
     *pStateCurnt++ = *pState++;
 

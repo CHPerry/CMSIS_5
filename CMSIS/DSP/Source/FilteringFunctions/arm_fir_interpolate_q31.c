@@ -67,7 +67,7 @@
  * After all multiply-accumulates are performed, the 2.62 accumulator is truncated to 1.32 format and then saturated to 1.31 format.    
  */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -99,7 +99,7 @@ void arm_fir_interpolate_q31(
   blkCntN2 = blockSize - (2 * blkCnt);
 
   /* Samples loop unrolled by 2 */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Copy new input sample into the state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -111,7 +111,7 @@ void arm_fir_interpolate_q31(
     /* Loop over the Interpolation factor. */
     i = (S->L);
 
-    while(i > 0u)
+    while (i > 0u)
     {
       /* Set accumulator to zero */
       acc0 = 0;
@@ -129,7 +129,7 @@ void arm_fir_interpolate_q31(
 
       x0 = *(ptr1++);
 
-      while(tapCnt > 0u)
+      while (tapCnt > 0u)
       {
 
         /* Read the input sample */
@@ -187,7 +187,7 @@ void arm_fir_interpolate_q31(
       /* If the polyPhase length is not a multiple of 4, compute the remaining filter taps */
       tapCnt = phaseLen % 0x4u;
 
-      while(tapCnt > 0u)
+      while (tapCnt > 0u)
       {
 
         /* Read the input sample */
@@ -239,7 +239,7 @@ void arm_fir_interpolate_q31(
   blkCnt = blkCntN2;
 
   /* Loop over the blockSize. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Copy new input sample into the state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -249,7 +249,7 @@ void arm_fir_interpolate_q31(
 
     /* Loop over the Interpolation factor. */
     i = S->L;
-    while(i > 0u)
+    while (i > 0u)
     {
       /* Set accumulator to zero */
       sum0 = 0;
@@ -263,7 +263,7 @@ void arm_fir_interpolate_q31(
       /* Loop over the polyPhase length. Unroll by a factor of 4.        
        ** Repeat until we've computed numTaps-(4*S->L) coefficients. */
       tapCnt = phaseLen >> 2;
-      while(tapCnt > 0u)
+      while (tapCnt > 0u)
       {
 
         /* Read the coefficient */
@@ -323,7 +323,7 @@ void arm_fir_interpolate_q31(
       /* If the polyPhase length is not a multiple of 4, compute the remaining filter taps */
       tapCnt = phaseLen & 0x3u;
 
-      while(tapCnt > 0u)
+      while (tapCnt > 0u)
       {
         /* Read the coefficient */
         c0 = *(ptr2);
@@ -369,7 +369,7 @@ void arm_fir_interpolate_q31(
   tapCnt = (phaseLen - 1u) >> 2u;
 
   /* copy data */
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
     *pStateCurnt++ = *pState++;
@@ -383,7 +383,7 @@ void arm_fir_interpolate_q31(
   tapCnt = (phaseLen - 1u) % 0x04u;
 
   /* copy data */
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -423,7 +423,7 @@ void arm_fir_interpolate_q31(
   blkCnt = blockSize;
 
   /* Loop over the blockSize. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Copy new input sample into the state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -431,7 +431,7 @@ void arm_fir_interpolate_q31(
     /* Loop over the Interpolation factor. */
     i = S->L;
 
-    while(i > 0u)
+    while (i > 0u)
     {
       /* Set accumulator to zero */
       sum = 0;
@@ -444,7 +444,7 @@ void arm_fir_interpolate_q31(
 
       tapCnt = phaseLen;
 
-      while(tapCnt > 0u)
+      while (tapCnt > 0u)
       {
         /* Read the coefficient */
         c0 = *(ptr2);
@@ -487,7 +487,7 @@ void arm_fir_interpolate_q31(
   tapCnt = phaseLen - 1u;
 
   /* copy data */
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -497,7 +497,7 @@ void arm_fir_interpolate_q31(
 
 }
 
-#endif /*   #ifndef ARM_MATH_CM0_FAMILY */
+#endif /*   #if defined(ARM_MATH_DSP) */
 
  /**    
   * @} end of FIR_Interpolate group    

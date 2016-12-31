@@ -73,7 +73,7 @@ void arm_fir_q7(
   uint32_t blockSize)
 {
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -104,7 +104,7 @@ void arm_fir_q7(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Copy four new input samples into the state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -134,7 +134,7 @@ void arm_fir_q7(
     tapCnt = numTaps >> 2;
     i = tapCnt;
 
-    while(i > 0u)
+    while (i > 0u)
     {
       /* Read the b[numTaps] coefficient */
       c0 = *pb;
@@ -201,7 +201,7 @@ void arm_fir_q7(
     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
 
     i = numTaps - (tapCnt * 4u);
-    while(i > 0u)
+    while (i > 0u)
     {
       /* Read coefficients */
       c0 = *(pb++);
@@ -247,7 +247,7 @@ void arm_fir_q7(
    ** No loop unrolling is used. */
   blkCnt = blockSize % 4u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Copy one sample at a time into state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -268,7 +268,7 @@ void arm_fir_q7(
     {
       acc0 += (q15_t) * (px++) * (*(pb++));
       i--;
-    } while(i > 0u);
+    } while (i > 0u);
 
     /* The result is in 2.14 format.  Convert to 1.7    
      ** Then store the output in the destination buffer. */
@@ -291,7 +291,7 @@ void arm_fir_q7(
   tapCnt = (numTaps - 1u) >> 2u;
 
   /* copy data */
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
     *pStateCurnt++ = *pState++;
@@ -306,7 +306,7 @@ void arm_fir_q7(
   tapCnt = (numTaps - 1u) % 0x4u;
 
   /* Copy the remaining q31_t data */
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -335,7 +335,7 @@ void arm_fir_q7(
   blkCnt = blockSize;
 
   /* Perform filtering upto BlockSize - BlockSize%4  */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Copy one sample at a time into state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -352,7 +352,7 @@ void arm_fir_q7(
 
     i = numTaps;
 
-    while(i > 0u)
+    while (i > 0u)
     {
       /* acc =  b[numTaps-1] * x[n-numTaps-1] + b[numTaps-2] * x[n-numTaps-2] + b[numTaps-3] * x[n-numTaps-3] +...+ b[0] * x[0] */
       acc += (q15_t) * px++ * *pb++;
@@ -382,13 +382,13 @@ void arm_fir_q7(
   i = (numTaps - 1u);
 
   /* Copy q7_t data */
-  while(i > 0u)
+  while (i > 0u)
   {
     *pStateCurnt++ = *pState++;
     i--;
   }
 
-#endif /*   #ifndef ARM_MATH_CM0_FAMILY */
+#endif /*   #if defined(ARM_MATH_DSP) */
 
 }
 

@@ -90,7 +90,7 @@ arm_status arm_mat_mult_f32(
   uint16_t numColsB = pSrcB->numCols;            /* number of columns of input matrix B */
   uint16_t numColsA = pSrcA->numCols;            /* number of columns of input matrix A */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -102,7 +102,7 @@ arm_status arm_mat_mult_f32(
 
 
   /* Check for matrix mismatch condition */
-  if((pSrcA->numCols != pSrcB->numRows) ||
+  if ((pSrcA->numCols != pSrcB->numRows) ||
      (pSrcA->numRows != pDst->numRows) || (pSrcB->numCols != pDst->numCols))
   {
 
@@ -142,7 +142,7 @@ arm_status arm_mat_mult_f32(
         colCnt = numColsA >> 2u;
 
         /* matrix multiplication        */
-        while(colCnt > 0u)
+        while (colCnt > 0u)
         {
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
           in3 = *pIn2;
@@ -172,7 +172,7 @@ arm_status arm_mat_mult_f32(
          ** No loop unrolling is used. */
         colCnt = numColsA % 0x4u;
 
-        while(colCnt > 0u)
+        while (colCnt > 0u)
         {
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
           sum += *pIn1++ * (*pIn2);
@@ -192,7 +192,7 @@ arm_status arm_mat_mult_f32(
         /* Decrement the column loop counter */
         col--;
 
-      } while(col > 0u);
+      } while (col > 0u);
 
 #else
 
@@ -205,7 +205,7 @@ arm_status arm_mat_mult_f32(
 #ifdef ARM_MATH_MATRIX_CHECK
 
   /* Check for matrix mismatch condition */
-  if((pSrcA->numCols != pSrcB->numRows) ||
+  if ((pSrcA->numCols != pSrcB->numRows) ||
      (pSrcA->numRows != pDst->numRows) || (pSrcB->numCols != pDst->numCols))
   {
 
@@ -242,7 +242,7 @@ arm_status arm_mat_mult_f32(
         /* Matrix A columns number of MAC operations are to be performed */
         colCnt = numColsA;
 
-        while(colCnt > 0u)
+        while (colCnt > 0u)
         {
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
           sum += *pIn1++ * (*pIn2);
@@ -261,9 +261,9 @@ arm_status arm_mat_mult_f32(
         /* Update the pointer pIn2 to point to the  starting address of the next column */
         pIn2 = pInB + (numColsB - col);
 
-      } while(col > 0u);
+      } while (col > 0u);
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
       /* Update the pointer pInA to point to the  starting address of the next row */
       i = i + numColsB;
@@ -272,7 +272,7 @@ arm_status arm_mat_mult_f32(
       /* Decrement the row loop counter */
       row--;
 
-    } while(row > 0u);
+    } while (row > 0u);
     /* Set status as ARM_MATH_SUCCESS */
     status = ARM_MATH_SUCCESS;
   }

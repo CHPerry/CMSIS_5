@@ -94,7 +94,7 @@ void arm_cfft_q31(
 {
     uint32_t L = S->fftLen;
 
-    if(ifftFlag == 1u)
+    if (ifftFlag == 1u)
     {
         switch (L) 
         {
@@ -135,7 +135,7 @@ void arm_cfft_q31(
         }  
     }
     
-    if( bitReverseFlag )
+    if ( bitReverseFlag )
         arm_bitreversal_32((uint32_t*)p1,S->bitRevLength,S->pBitRevTable);    
 }
 

@@ -122,7 +122,7 @@ void stage_rfft_f32(
       pA += 2;
       pB -= 2;
       k--;
-   } while(k > 0u);
+   } while (k > 0u);
 }
 
 /* Prepares data for inverse cfft */
@@ -151,7 +151,7 @@ float32_t * p, float32_t * pOut)
    pB  =  p + 2*k ;
    pA +=  2	   ;
 
-   while(k > 0u)
+   while (k > 0u)
    {
       /* G is half of the frequency complex spectrum */
       //for k = 2:N
@@ -306,7 +306,7 @@ uint8_t ifftFlag)
    Sint->fftLen = S->fftLenRFFT / 2;
 
    /* Calculation of Real FFT */
-   if(ifftFlag)
+   if (ifftFlag)
    {
       /*  Real FFT compression */
       merge_rfft_f32(S, p, pOut);

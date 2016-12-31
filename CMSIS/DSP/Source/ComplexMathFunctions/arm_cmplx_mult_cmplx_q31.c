@@ -75,7 +75,7 @@ void arm_cmplx_mult_cmplx_q31(
   q31_t mul1, mul2, mul3, mul4;
   q31_t out1, out2;
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -84,7 +84,7 @@ void arm_cmplx_mult_cmplx_q31(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C[2 * i] = A[2 * i] * B[2 * i] - A[2 * i + 1] * B[2 * i + 1].  */
     /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i].  */
@@ -188,7 +188,7 @@ void arm_cmplx_mult_cmplx_q31(
    ** No loop unrolling is used. */
   blkCnt = numSamples % 0x4u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C[2 * i] = A[2 * i] * B[2 * i] - A[2 * i + 1] * B[2 * i + 1].  */
     /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i].  */
@@ -228,7 +228,7 @@ void arm_cmplx_mult_cmplx_q31(
 
   /* First part of the processing with loop unrolling.  Compute 2 outputs at a time.     
    ** a second loop below computes the remaining 1 sample. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C[2 * i] = A[2 * i] * B[2 * i] - A[2 * i + 1] * B[2 * i + 1].  */
     /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i].  */
@@ -286,7 +286,7 @@ void arm_cmplx_mult_cmplx_q31(
    ** No loop unrolling is used. */
   blkCnt = numSamples % 0x2u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C[2 * i] = A[2 * i] * B[2 * i] - A[2 * i + 1] * B[2 * i + 1].  */
     /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i].  */
@@ -317,7 +317,7 @@ void arm_cmplx_mult_cmplx_q31(
     blkCnt--;
   }
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
 }
 

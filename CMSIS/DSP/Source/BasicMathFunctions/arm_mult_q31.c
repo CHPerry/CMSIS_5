@@ -71,7 +71,7 @@ void arm_mult_q31(
 {
   uint32_t blkCnt;                               /* loop counters */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
 /* Run the below code for Cortex-M4 and Cortex-M3 */
   q31_t inA1, inA2, inA3, inA4;                  /* temporary input variables */
@@ -83,7 +83,7 @@ void arm_mult_q31(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = A * B */
     /* Multiply the inputs and then store the results in the destination buffer. */
@@ -119,7 +119,7 @@ void arm_mult_q31(
    ** No loop unrolling is used. */
   blkCnt = blockSize % 0x4u;
   
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = A * B */
     /* Multiply the inputs and then store the results in the destination buffer. */
@@ -141,7 +141,7 @@ void arm_mult_q31(
   blkCnt = blockSize;
 
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = A * B */
     /* Multiply the inputs and then store the results in the destination buffer. */
@@ -152,7 +152,7 @@ void arm_mult_q31(
     blkCnt--;
   }
   
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 }
 
 /**    

@@ -140,7 +140,7 @@ void arm_fir_lattice_f32(
   float32_t *pk;                                 /* temporary coefficient pointer */
 
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -158,7 +158,7 @@ void arm_fir_lattice_f32(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
      a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
 
     /* Read two samples from input buffer */
@@ -216,7 +216,7 @@ void arm_fir_lattice_f32(
      ** Repeat until we've computed numStages-3 coefficients. */
 
     /* Process 2nd, 3rd, 4th and 5th taps ... here */
-    while(stageCnt > 0u)
+    while (stageCnt > 0u)
     {
       /* Read g1(n-1), g3(n-1) .... from state */
       gcurr1 = *px;
@@ -324,7 +324,7 @@ void arm_fir_lattice_f32(
     /* If the (filter length -1) is not a multiple of 4, compute the remaining filter taps */
     stageCnt = (numStages - 1u) % 0x4u;
 
-    while(stageCnt > 0u)
+    while (stageCnt > 0u)
     {
       gcurr1 = *px;
 
@@ -367,7 +367,7 @@ void arm_fir_lattice_f32(
    ** No loop unrolling is used. */
   blkCnt = blockSize % 0x4u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* f0(n) = x(n) */
     fcurr1 = *pSrc++;
@@ -397,7 +397,7 @@ void arm_fir_lattice_f32(
     stageCnt = (numStages - 1u);
 
     /* stage loop */
-    while(stageCnt > 0u)
+    while (stageCnt > 0u)
     {
       /* read g2(n) from state buffer */
       gcurr1 = *px;
@@ -438,7 +438,7 @@ void arm_fir_lattice_f32(
 
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* f0(n) = x(n) */
     fcurr = *pSrc++;
@@ -468,7 +468,7 @@ void arm_fir_lattice_f32(
     stageCnt = (numStages - 1u);
 
     /* stage loop */
-    while(stageCnt > 0u)
+    while (stageCnt > 0u)
     {
       /* read g2(n) from state buffer */
       gcurr = *px;
@@ -497,7 +497,7 @@ void arm_fir_lattice_f32(
 
   }
 
-#endif /*   #ifndef ARM_MATH_CM0_FAMILY */
+#endif /*   #if defined(ARM_MATH_DSP) */
 
 }
 

@@ -105,7 +105,7 @@ void arm_fir_fast_q31(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Copy four new input samples into the state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -135,7 +135,7 @@ void arm_fir_fast_q31(
     tapCnt = numTaps >> 2;
     i = tapCnt;
 
-    while(i > 0u)
+    while (i > 0u)
     {
       /* Read the b[numTaps] coefficient */
       c0 = *pb;
@@ -202,7 +202,7 @@ void arm_fir_fast_q31(
     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
 
     i = numTaps - (tapCnt * 4u);
-    while(i > 0u)
+    while (i > 0u)
     {
       /* Read coefficients */
       c0 = *(pb++);
@@ -244,7 +244,7 @@ void arm_fir_fast_q31(
    ** No loop unrolling is used. */
   blkCnt = blockSize % 4u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Copy one sample at a time into state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -265,7 +265,7 @@ void arm_fir_fast_q31(
     {
       multAcc_32x32_keep32_R(acc0, (*px++), (*(pb++)));
       i--;
-    } while(i > 0u);
+    } while (i > 0u);
 
     /* The result is in 2.30 format.  Convert to 1.31    
      ** Then store the output in the destination buffer. */
@@ -289,7 +289,7 @@ void arm_fir_fast_q31(
   tapCnt = (numTaps - 1u);
 
   /* Copy the remaining q31_t data */
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
 

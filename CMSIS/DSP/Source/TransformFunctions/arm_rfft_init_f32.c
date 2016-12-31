@@ -8355,7 +8355,7 @@ arm_status arm_rfft_init_f32(
   /* Init Complex FFT Instance */
   S->pCfft = S_CFFT;
 
-  if(S->ifftFlagR)
+  if (S->ifftFlagR)
   {
     /* Initializes the CIFFT Module for fftLenreal/2 length */
     arm_cfft_radix4_init_f32(S->pCfft, S->fftLenBy2, 1u, 0u);

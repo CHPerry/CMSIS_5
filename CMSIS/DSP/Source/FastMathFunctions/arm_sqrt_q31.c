@@ -73,12 +73,12 @@ arm_status arm_sqrt_q31(
   number = in;
 
   /* If the input is a positive number then compute the signBits. */
-  if(number > 0)
+  if (number > 0)
   {
     signBits1 = __CLZ(number) - 1;
 
     /* Shift by the number of signBits1 */
-    if((signBits1 % 2) == 0)
+    if ((signBits1 % 2) == 0)
     {
       number = number << signBits1;
     }
@@ -128,7 +128,7 @@ arm_status arm_sqrt_q31(
     var1 = ((q31_t) (((q63_t) temp1 * var1) >> 31)) << 1;
 
     /* Shift the output down accordingly */
-    if((signBits1 % 2) == 0)
+    if ((signBits1 % 2) == 0)
     {
       var1 = var1 >> (signBits1 / 2);
     }

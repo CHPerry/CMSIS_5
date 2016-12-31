@@ -89,7 +89,7 @@ void arm_cmplx_mult_cmplx_f32(
   float32_t a1, b1, c1, d1;                      /* Temporary variables to store real and imaginary values */
   uint32_t blkCnt;                               /* loop counters */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
   float32_t a2, b2, c2, d2;                      /* Temporary variables to store real and imaginary values */
@@ -101,7 +101,7 @@ void arm_cmplx_mult_cmplx_f32(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.        
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C[2 * i] = A[2 * i] * B[2 * i] - A[2 * i + 1] * B[2 * i + 1].  */
     /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i].  */
@@ -182,9 +182,9 @@ void arm_cmplx_mult_cmplx_f32(
   /* Run the below code for Cortex-M0 */
   blkCnt = numSamples;
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C[2 * i] = A[2 * i] * B[2 * i] - A[2 * i + 1] * B[2 * i + 1].  */
     /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i].  */

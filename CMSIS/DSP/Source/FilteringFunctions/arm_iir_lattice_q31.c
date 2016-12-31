@@ -86,12 +86,12 @@ void arm_iir_lattice_q31(
   pState = &S->pState[0];
 
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
   /* Sample processing */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Read Sample from input buffer */
     /* fN(n) = x(n) */
@@ -126,7 +126,7 @@ void arm_iir_lattice_q31(
     /* Loop unrolling.  Process 4 taps at a time. */
     tapCnt = (numStages - 1u) >> 2;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
 
       /* Process sample for 2nd, 6th .. taps */
@@ -195,7 +195,7 @@ void arm_iir_lattice_q31(
     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
     tapCnt = (numStages - 1u) % 0x4u;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       gcurr = *px1++;
       /* Process sample for last taps */
@@ -235,7 +235,7 @@ void arm_iir_lattice_q31(
   tapCnt = numStages >> 2u;
 
   /* copy data */
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
     *pStateCurnt++ = *pState++;
@@ -251,7 +251,7 @@ void arm_iir_lattice_q31(
   tapCnt = (numStages) % 0x4u;
 
   /* Copy the remaining q31_t data */
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -263,7 +263,7 @@ void arm_iir_lattice_q31(
 
   /* Run the below code for Cortex-M0 */
   /* Sample processing */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Read Sample from input buffer */
     /* fN(n) = x(n) */
@@ -282,7 +282,7 @@ void arm_iir_lattice_q31(
 
     tapCnt = numStages;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       gcurr = *px1++;
       /* Process sample */
@@ -330,7 +330,7 @@ void arm_iir_lattice_q31(
   tapCnt = numStages;
 
   /* Copy the remaining q31_t data */
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -338,7 +338,7 @@ void arm_iir_lattice_q31(
     tapCnt--;
   }
 
-#endif /*   #ifndef ARM_MATH_CM0_FAMILY */
+#endif /*   #if defined(ARM_MATH_DSP) */
 
 }
 

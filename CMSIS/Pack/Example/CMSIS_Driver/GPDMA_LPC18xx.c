@@ -87,7 +87,7 @@ __inline static int32_t Set_Channel_active_flag (uint8_t ch) {
   \param[in]   ch        Channel number (0..7)
 */
 __inline static void Clear_Channel_active_flag (uint8_t ch) {
-  while(__STREXW((__LDREXW(&Channel_active) & ~(1U << ch)), &Channel_active));
+  while (__STREXW((__LDREXW(&Channel_active) & ~(1U << ch)), &Channel_active));
 }
 
 /**

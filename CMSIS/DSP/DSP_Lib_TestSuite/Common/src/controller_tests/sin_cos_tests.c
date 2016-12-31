@@ -49,7 +49,7 @@ float32_t cos_val_ref = 0;
   Function to test correctness of sin_cos output by comparing it with reference library
 */
 #define COMPARISON_INTERFACE(type, threshold)                           \
-    if( (ABS((type) sin_val_ref - (type) sin_val_fut) >                 \
+    if ( (ABS((type) sin_val_ref - (type) sin_val_fut) >                 \
          (type) threshold ) ||                                          \
         (ABS((type) cos_val_ref - (type) cos_val_fut) >                 \
          (type) threshold))                                             \

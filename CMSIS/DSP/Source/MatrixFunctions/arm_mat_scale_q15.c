@@ -78,17 +78,17 @@ arm_status arm_mat_scale_q15(
   uint32_t blkCnt;                               /* loop counters */
   arm_status status;                             /* status of matrix scaling     */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   q15_t in1, in2, in3, in4;
   q31_t out1, out2, out3, out4;
   q31_t inA1, inA2;
 
-#endif //     #ifndef ARM_MATH_CM0_FAMILY
+#endif //     #if defined(ARM_MATH_DSP)
 
 #ifdef ARM_MATH_MATRIX_CHECK
   /* Check for matrix mismatch */
-  if((pSrc->numRows != pDst->numRows) || (pSrc->numCols != pDst->numCols))
+  if ((pSrc->numRows != pDst->numRows) || (pSrc->numCols != pDst->numCols))
   {
     /* Set status as ARM_MATH_SIZE_MISMATCH */
     status = ARM_MATH_SIZE_MISMATCH;
@@ -99,7 +99,7 @@ arm_status arm_mat_scale_q15(
     /* Total number of samples in the input matrix */
     numSamples = (uint32_t) pSrc->numRows * pSrc->numCols;
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
     /* Run the below code for Cortex-M4 and Cortex-M3 */
     /* Loop Unrolling */
@@ -107,7 +107,7 @@ arm_status arm_mat_scale_q15(
 
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* C(m,n) = A(m,n) * k */
       /* Scale, saturate and then store the results in the destination buffer. */
@@ -158,9 +158,9 @@ arm_status arm_mat_scale_q15(
     /* Initialize blkCnt with number of samples */
     blkCnt = numSamples;
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* C(m,n) = A(m,n) * k */
       /* Scale, saturate and then store the results in the destination buffer. */

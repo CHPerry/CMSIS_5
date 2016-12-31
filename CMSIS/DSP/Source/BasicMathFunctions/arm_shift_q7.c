@@ -77,7 +77,7 @@ void arm_shift_q7(
   uint32_t blkCnt;                               /* loop counter */
   uint8_t sign;                                  /* Sign of shiftBits */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
 /* Run the below code for Cortex-M4 and Cortex-M3 */
   q7_t in1;                                      /* Input value1 */
@@ -93,11 +93,11 @@ void arm_shift_q7(
   sign = (shiftBits & 0x80);
 
   /* If the shift value is positive then do right shift else left shift */
-  if(sign == 0u)
+  if (sign == 0u)
   {
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* C = A << shiftBits */
       /* Read 4 inputs */
@@ -122,7 +122,7 @@ void arm_shift_q7(
      ** No loop unrolling is used. */
     blkCnt = blockSize % 0x4u;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* C = A << shiftBits */
       /* Shift the input and then store the result in the destination buffer. */
@@ -137,7 +137,7 @@ void arm_shift_q7(
     shiftBits = -shiftBits;
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* C = A >> shiftBits */
       /* Read 4 inputs */
@@ -161,7 +161,7 @@ void arm_shift_q7(
      ** No loop unrolling is used. */
     blkCnt = blockSize % 0x4u;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* C = A >> shiftBits */
       /* Shift the input and then store the result in the destination buffer. */
@@ -181,12 +181,12 @@ void arm_shift_q7(
   sign = (shiftBits & 0x80);
 
   /* If the shift value is positive then do right shift else left shift */
-  if(sign == 0u)
+  if (sign == 0u)
   {
     /* Initialize blkCnt with number of samples */
     blkCnt = blockSize;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* C = A << shiftBits */
       /* Shift the input and then store the result in the destination buffer. */
@@ -201,7 +201,7 @@ void arm_shift_q7(
     /* Initialize blkCnt with number of samples */
     blkCnt = blockSize;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* C = A >> shiftBits */
       /* Shift the input and then store the result in the destination buffer. */
@@ -212,7 +212,7 @@ void arm_shift_q7(
     }
   }
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 }
 
 /**        

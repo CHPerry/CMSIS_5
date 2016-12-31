@@ -98,7 +98,7 @@ arm_status arm_conv_partial_opt_q7(
   q7_t out0, out1, out2, out3;                   /* temporary variables */
 
   /* Check for range of output samples to be calculated */
-  if((firstIndex + numPoints) > ((srcALen + (srcBLen - 1u))))
+  if ((firstIndex + numPoints) > ((srcALen + (srcBLen - 1u))))
   {
     /* Set status as ARM_MATH_ARGUMENT_ERROR */
     status = ARM_MATH_ARGUMENT_ERROR;
@@ -109,7 +109,7 @@ arm_status arm_conv_partial_opt_q7(
     /* The algorithm implementation is based on the lengths of the inputs. */
     /* srcB is always made to slide across srcA. */
     /* So srcBLen is always considered as shorter or equal to srcALen */
-    if(srcALen >= srcBLen)
+    if (srcALen >= srcBLen)
     {
       /* Initialization of inputA pointer */
       pIn1 = pSrcA;
@@ -142,7 +142,7 @@ arm_status arm_conv_partial_opt_q7(
 
     /* First part of the processing with loop unrolling copies 4 data points at a time.       
      ** a second loop below copies for the remaining 1 to 3 samples. */
-    while(k > 0u)
+    while (k > 0u)
     {
       /* copy second buffer in reversal manner */
       x4 = (q15_t) * px--;
@@ -162,7 +162,7 @@ arm_status arm_conv_partial_opt_q7(
      ** No loop unrolling is used. */
     k = srcBLen % 0x4u;
 
-    while(k > 0u)
+    while (k > 0u)
     {
       /* copy second buffer in reversal manner for remaining samples */
       x4 = (q15_t) * px--;
@@ -187,7 +187,7 @@ arm_status arm_conv_partial_opt_q7(
 
     /* First part of the processing with loop unrolling copies 4 data points at a time.       
      ** a second loop below copies for the remaining 1 to 3 samples. */
-    while(k > 0u)
+    while (k > 0u)
     {
       /* copy second buffer in reversal manner */
       x4 = (q15_t) * pIn1++;
@@ -207,7 +207,7 @@ arm_status arm_conv_partial_opt_q7(
      ** No loop unrolling is used. */
     k = srcALen % 0x4u;
 
-    while(k > 0u)
+    while (k > 0u)
     {
       /* copy second buffer in reversal manner for remaining samples */
       x4 = (q15_t) * pIn1++;
@@ -240,7 +240,7 @@ arm_status arm_conv_partial_opt_q7(
     blkCnt = (numPoints) >> 2;
 
 
-    while(blkCnt > 0)
+    while (blkCnt > 0)
     {
       /* Initialze temporary scratch pointer as scratch1 */
       pScr1 = pScratch1;
@@ -259,7 +259,7 @@ arm_status arm_conv_partial_opt_q7(
 
       tapCnt = (srcBLen) >> 2u;
 
-      while(tapCnt > 0u)
+      while (tapCnt > 0u)
       {
 
         /* Read four samples from smaller buffer */
@@ -326,7 +326,7 @@ arm_status arm_conv_partial_opt_q7(
       /* apply same above for remaining samples of smaller length sequence */
       tapCnt = (srcBLen) & 3u;
 
-      while(tapCnt > 0u)
+      while (tapCnt > 0u)
       {
 
         /* accumlate the results */
@@ -361,7 +361,7 @@ arm_status arm_conv_partial_opt_q7(
     blkCnt = (numPoints) & 0x3;
 
     /* Calculate convolution for remaining samples of Bigger length sequence */
-    while(blkCnt > 0)
+    while (blkCnt > 0)
     {
       /* Initialze temporary scratch pointer as scratch1 */
       pScr1 = pScratch1;
@@ -371,7 +371,7 @@ arm_status arm_conv_partial_opt_q7(
 
       tapCnt = (srcBLen) >> 1u;
 
-      while(tapCnt > 0u)
+      while (tapCnt > 0u)
       {
 
         /* Read next two samples from scratch1 buffer */
@@ -389,7 +389,7 @@ arm_status arm_conv_partial_opt_q7(
       tapCnt = (srcBLen) & 1u;
 
       /* apply same above for remaining samples of smaller length sequence */
-      while(tapCnt > 0u)
+      while (tapCnt > 0u)
       {
 
         /* accumlate the results */
@@ -448,7 +448,7 @@ arm_status arm_conv_partial_opt_q7(
   q15_t y10, y11;                                /* Temporary input variables */
 
   /* Check for range of output samples to be calculated */
-  if((firstIndex + numPoints) > ((srcALen + (srcBLen - 1u))))
+  if ((firstIndex + numPoints) > ((srcALen + (srcBLen - 1u))))
   {
     /* Set status as ARM_MATH_ARGUMENT_ERROR */
     status = ARM_MATH_ARGUMENT_ERROR;
@@ -459,7 +459,7 @@ arm_status arm_conv_partial_opt_q7(
     /* The algorithm implementation is based on the lengths of the inputs. */
     /* srcB is always made to slide across srcA. */
     /* So srcBLen is always considered as shorter or equal to srcALen */
-    if(srcALen >= srcBLen)
+    if (srcALen >= srcBLen)
     {
       /* Initialization of inputA pointer */
       pIn1 = pSrcA;
@@ -492,7 +492,7 @@ arm_status arm_conv_partial_opt_q7(
 
     /* First part of the processing with loop unrolling copies 4 data points at a time.       
      ** a second loop below copies for the remaining 1 to 3 samples. */
-    while(k > 0u)
+    while (k > 0u)
     {
       /* copy second buffer in reversal manner */
       x4 = (q15_t) * px--;
@@ -512,7 +512,7 @@ arm_status arm_conv_partial_opt_q7(
      ** No loop unrolling is used. */
     k = srcBLen % 0x4u;
 
-    while(k > 0u)
+    while (k > 0u)
     {
       /* copy second buffer in reversal manner for remaining samples */
       x4 = (q15_t) * px--;
@@ -537,7 +537,7 @@ arm_status arm_conv_partial_opt_q7(
 
     /* First part of the processing with loop unrolling copies 4 data points at a time.       
      ** a second loop below copies for the remaining 1 to 3 samples. */
-    while(k > 0u)
+    while (k > 0u)
     {
       /* copy second buffer in reversal manner */
       x4 = (q15_t) * pIn1++;
@@ -557,7 +557,7 @@ arm_status arm_conv_partial_opt_q7(
      ** No loop unrolling is used. */
     k = srcALen % 0x4u;
 
-    while(k > 0u)
+    while (k > 0u)
     {
       /* copy second buffer in reversal manner for remaining samples */
       x4 = (q15_t) * pIn1++;
@@ -572,7 +572,7 @@ arm_status arm_conv_partial_opt_q7(
 
     /* First part of the processing with loop unrolling copies 4 data points at a time.       
      ** a second loop below copies for the remaining 1 to 3 samples. */
-    while(k > 0u)
+    while (k > 0u)
     {
       /* copy second buffer in reversal manner */
       *pScr1++ = 0;
@@ -588,7 +588,7 @@ arm_status arm_conv_partial_opt_q7(
      ** No loop unrolling is used. */
     k = (srcBLen - 1u) % 0x4u;
 
-    while(k > 0u)
+    while (k > 0u)
     {
       /* copy second buffer in reversal manner for remaining samples */
       *pScr1++ = 0;
@@ -614,7 +614,7 @@ arm_status arm_conv_partial_opt_q7(
     blkCnt = (numPoints) >> 2;
 
 
-    while(blkCnt > 0)
+    while (blkCnt > 0)
     {
       /* Initialze temporary scratch pointer as scratch1 */
       pScr1 = pScratch1;
@@ -635,7 +635,7 @@ arm_status arm_conv_partial_opt_q7(
 
       tapCnt = (srcBLen) >> 2u;
 
-      while(tapCnt > 0u)
+      while (tapCnt > 0u)
       {
 
         /* Read four samples from smaller buffer */
@@ -698,7 +698,7 @@ arm_status arm_conv_partial_opt_q7(
       /* apply same above for remaining samples of smaller length sequence */
       tapCnt = (srcBLen) & 3u;
 
-      while(tapCnt > 0u)
+      while (tapCnt > 0u)
       {
 
         /* accumlate the results */
@@ -731,7 +731,7 @@ arm_status arm_conv_partial_opt_q7(
     blkCnt = (numPoints) & 0x3;
 
     /* Calculate convolution for remaining samples of Bigger length sequence */
-    while(blkCnt > 0)
+    while (blkCnt > 0)
     {
       /* Initialze temporary scratch pointer as scratch1 */
       pScr1 = pScratch1;
@@ -741,7 +741,7 @@ arm_status arm_conv_partial_opt_q7(
 
       tapCnt = (srcBLen) >> 1u;
 
-      while(tapCnt > 0u)
+      while (tapCnt > 0u)
       {
 
         /* Read next two samples from scratch1 buffer */
@@ -763,7 +763,7 @@ arm_status arm_conv_partial_opt_q7(
       tapCnt = (srcBLen) & 1u;
 
       /* apply same above for remaining samples of smaller length sequence */
-      while(tapCnt > 0u)
+      while (tapCnt > 0u)
       {
 
         /* accumlate the results */

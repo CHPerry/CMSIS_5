@@ -78,7 +78,7 @@ arm_status arm_mat_scale_q31(
   arm_status status;                             /* status of matrix scaling      */
   q31_t in1, in2, out1;                          /* temporary variabels */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   q31_t in3, in4, out2, out3, out4;              /* temporary variables */
 
@@ -86,7 +86,7 @@ arm_status arm_mat_scale_q31(
 
 #ifdef ARM_MATH_MATRIX_CHECK
   /* Check for matrix mismatch  */
-  if((pSrc->numRows != pDst->numRows) || (pSrc->numCols != pDst->numCols))
+  if ((pSrc->numRows != pDst->numRows) || (pSrc->numCols != pDst->numCols))
   {
     /* Set status as ARM_MATH_SIZE_MISMATCH */
     status = ARM_MATH_SIZE_MISMATCH;
@@ -97,7 +97,7 @@ arm_status arm_mat_scale_q31(
     /* Total number of samples in the input matrix */
     numSamples = (uint32_t) pSrc->numRows * pSrc->numCols;
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
     /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -106,7 +106,7 @@ arm_status arm_mat_scale_q31(
 
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* C(m,n) = A(m,n) * k */
       /* Read values from input */
@@ -126,10 +126,10 @@ arm_status arm_mat_scale_q31(
       out2 = in2 << totShift;
 
       /* saturate the results. */
-      if(in1 != (out1 >> totShift))
+      if (in1 != (out1 >> totShift))
         out1 = 0x7FFFFFFF ^ (in1 >> 31);
 
-      if(in2 != (out2 >> totShift))
+      if (in2 != (out2 >> totShift))
         out2 = 0x7FFFFFFF ^ (in2 >> 31);
 
       out3 = in3 << totShift;
@@ -138,10 +138,10 @@ arm_status arm_mat_scale_q31(
       *pOut = out1;
       *(pOut + 1) = out2;
 
-      if(in3 != (out3 >> totShift))
+      if (in3 != (out3 >> totShift))
         out3 = 0x7FFFFFFF ^ (in3 >> 31);
 
-      if(in4 != (out4 >> totShift))
+      if (in4 != (out4 >> totShift))
         out4 = 0x7FFFFFFF ^ (in4 >> 31);
 
 
@@ -168,9 +168,9 @@ arm_status arm_mat_scale_q31(
     /* Initialize blkCnt with number of samples */
     blkCnt = numSamples;
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* C(m,n) = A(m,n) * k */
       /* Scale, saturate and then store the results in the destination buffer. */
@@ -180,7 +180,7 @@ arm_status arm_mat_scale_q31(
 
       out1 = in2 << totShift;
 
-      if(in2 != (out1 >> totShift))
+      if (in2 != (out1 >> totShift))
         out1 = 0x7FFFFFFF ^ (in2 >> 31);
 
       *pOut++ = out1;

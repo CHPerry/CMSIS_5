@@ -341,18 +341,18 @@ __WEAK void SystemCoreClockSetup(void)
 
   /* Enable HIB domain */
   /* Power up HIB domain if and only if it is currently powered down */
-  if((SCU_POWER->PWRSTAT & SCU_POWER_PWRSTAT_HIBEN_Msk) == 0)
+  if ((SCU_POWER->PWRSTAT & SCU_POWER_PWRSTAT_HIBEN_Msk) == 0)
   {
     SCU_POWER->PWRSET |= SCU_POWER_PWRSET_HIB_Msk;
 
-    while((SCU_POWER->PWRSTAT & SCU_POWER_PWRSTAT_HIBEN_Msk) == 0)
+    while ((SCU_POWER->PWRSTAT & SCU_POWER_PWRSTAT_HIBEN_Msk) == 0)
     {
       /* wait until HIB domain is enabled */
     }
   }
 
   /* Remove the reset only if HIB domain were in a state of reset */
-  if((SCU_RESET->RSTSTAT) & SCU_RESET_RSTSTAT_HIBRS_Msk)
+  if ((SCU_RESET->RSTSTAT) & SCU_RESET_RSTSTAT_HIBRS_Msk)
   {
     SCU_RESET->RSTCLR |= SCU_RESET_RSTCLR_HIBRS_Msk;
     delay(DELAY_CNT_150US_50MHZ);
@@ -600,7 +600,7 @@ __WEAK void SystemCoreClockUpdate(void)
   if (SCU_CLK->SYSCLKCR & SCU_CLK_SYSCLKCR_SYSSEL_Msk)
   {
     /* fPLL is clock source for fSYS */
-    if(SCU_PLL->PLLCON2 & SCU_PLL_PLLCON2_PINSEL_Msk)
+    if (SCU_PLL->PLLCON2 & SCU_PLL_PLLCON2_PINSEL_Msk)
     {
       /* PLL input clock is the backup clock (fOFI) */
       temp = OFI_FREQUENCY;

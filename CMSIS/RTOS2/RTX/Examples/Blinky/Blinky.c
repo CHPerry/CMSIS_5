@@ -140,7 +140,7 @@ void app_main (void *argument) {
   osThreadFlagsSet(tid_phaseA, 0x0001);          /* set signal to phaseA thread   */
 
   osDelay(osWaitForever);
-  while(1);
+  while (1);
 }
 
 int main (void) {
@@ -154,7 +154,7 @@ int main (void) {
     osKernelStart();                    // Start thread execution
   }
 
-  while(1);
+  while (1);
 }
 
 

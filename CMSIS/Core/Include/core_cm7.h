@@ -2265,7 +2265,7 @@ __STATIC_INLINE void SCB_EnableDCache (void)
           __schedule_barrier();
         #endif
       } while (ways-- != 0U);
-    } while(sets-- != 0U);
+    } while (sets-- != 0U);
     __DSB();
 
     SCB->CCR |=  (uint32_t)SCB_CCR_DC_Msk;  /* enable D-Cache */
@@ -2306,7 +2306,7 @@ __STATIC_INLINE void SCB_DisableDCache (void)
           __schedule_barrier();
         #endif
       } while (ways-- != 0U);
-    } while(sets-- != 0U);
+    } while (sets-- != 0U);
 
     __DSB();
     __ISB();
@@ -2341,7 +2341,7 @@ __STATIC_INLINE void SCB_InvalidateDCache (void)
           __schedule_barrier();
         #endif
       } while (ways-- != 0U);
-    } while(sets-- != 0U);
+    } while (sets-- != 0U);
 
     __DSB();
     __ISB();
@@ -2376,7 +2376,7 @@ __STATIC_INLINE void SCB_CleanDCache (void)
           __schedule_barrier();
         #endif
       } while (ways-- != 0U);
-    } while(sets-- != 0U);
+    } while (sets-- != 0U);
 
     __DSB();
     __ISB();
@@ -2411,7 +2411,7 @@ __STATIC_INLINE void SCB_CleanInvalidateDCache (void)
           __schedule_barrier();
         #endif
       } while (ways-- != 0U);
-    } while(sets-- != 0U);
+    } while (sets-- != 0U);
 
     __DSB();
     __ISB();

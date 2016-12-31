@@ -942,7 +942,7 @@ static uint32_t USART_RxLineIntHandler (USART_RESOURCES *usart) {
 
   // Framing error
   else {
-    if(lsr & USART_LSR_FE) {
+    if (lsr & USART_LSR_FE) {
       usart->info->rx_status.rx_framing_error = 1U;
       event |= ARM_USART_EVENT_RX_FRAMING_ERROR;
     }

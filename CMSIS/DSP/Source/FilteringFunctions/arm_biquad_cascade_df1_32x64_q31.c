@@ -206,7 +206,7 @@ void arm_biquad_cas_df1_32x64_q31(
   uint32_t lShift = 32u - uShift;                /*  Shift to be applied to the output */
 
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -235,7 +235,7 @@ void arm_biquad_cas_df1_32x64_q31(
 
     /* First part of the processing with loop unrolling. Compute 4 outputs at a time.    
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while(sample > 0u)
+    while (sample > 0u)
     {
       /* Read the input */
       Xn = *pIn++;
@@ -397,7 +397,7 @@ void arm_biquad_cas_df1_32x64_q31(
      ** No loop unrolling is used. */
     sample = (blockSize & 0x3u);
 
-    while(sample > 0u)
+    while (sample > 0u)
     {
       /* Read the input */
       Xn = *pIn++;
@@ -460,7 +460,7 @@ void arm_biquad_cas_df1_32x64_q31(
     *pState++ = Yn1;
     *pState++ = Yn2;
 
-  } while(--stage);
+  } while (--stage);
 
 #else
 
@@ -488,7 +488,7 @@ void arm_biquad_cas_df1_32x64_q31(
 
     sample = blockSize;
 
-    while(sample > 0u)
+    while (sample > 0u)
     {
       /* Read the input */
       Xn = *pIn++;
@@ -551,9 +551,9 @@ void arm_biquad_cas_df1_32x64_q31(
     *pState++ = Yn1;
     *pState++ = Yn2;
 
-  } while(--stage);
+  } while (--stage);
 
-#endif /*    #ifndef ARM_MATH_CM0_FAMILY     */
+#endif /*    #if defined(ARM_MATH_DSP)     */
 }
 
   /**    

@@ -127,7 +127,7 @@
  * @return none.    
  */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -156,7 +156,7 @@ void arm_iir_lattice_f32(
   pState = &S->pState[0];
 
   /* Sample processing */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Read Sample from input buffer */
     /* fN(n) = x(n) */
@@ -178,7 +178,7 @@ void arm_iir_lattice_f32(
     /* Loop unrolling.  Process 4 taps at a time. */
     tapCnt = (numStages) >> 2;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Read gN-1(n-1) from state buffer */
       gcurr1 = *px1;
@@ -278,7 +278,7 @@ void arm_iir_lattice_f32(
     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
     tapCnt = (numStages) % 0x4u;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       gcurr1 = *px1++;
       /* Process sample for last taps */
@@ -318,7 +318,7 @@ void arm_iir_lattice_f32(
   tapCnt = numStages >> 2u;
 
   /* copy data */
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
     *pStateCurnt++ = *pState++;
@@ -334,7 +334,7 @@ void arm_iir_lattice_f32(
   tapCnt = (numStages) % 0x4u;
 
   /* Copy the remaining q31_t data */
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -367,7 +367,7 @@ void arm_iir_lattice_f32(
   pState = &S->pState[0];
 
   /* Sample processing */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Read Sample from input buffer */
     /* fN(n) = x(n) */
@@ -388,7 +388,7 @@ void arm_iir_lattice_f32(
     /* Process sample for numStages */
     tapCnt = numStages;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       gcurr = *px1++;
       /* Process sample for last taps */
@@ -429,7 +429,7 @@ void arm_iir_lattice_f32(
   tapCnt = numStages;
 
   /* Copy the data */
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -439,7 +439,7 @@ void arm_iir_lattice_f32(
 
 }
 
-#endif /*   #ifndef ARM_MATH_CM0_FAMILY */
+#endif /*   #if defined(ARM_MATH_DSP) */
 
 
 /**    

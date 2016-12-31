@@ -71,7 +71,7 @@ void arm_abs_q31(
   uint32_t blkCnt;                               /* loop counter */
   q31_t in;                                      /* Input value */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
   q31_t in1, in2, in3, in4;
@@ -81,7 +81,7 @@ void arm_abs_q31(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = |A| */
     /* Calculate absolute of input (if -1 then saturated to 0x7fffffff) and then store the results in the destination buffer. */
@@ -110,9 +110,9 @@ void arm_abs_q31(
   /* Initialize blkCnt with number of samples */
   blkCnt = blockSize;
 
-#endif /*   #ifndef ARM_MATH_CM0_FAMILY   */
+#endif /*   #if defined(ARM_MATH_DSP)   */
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = |A| */
     /* Calculate absolute value of the input (if -1 then saturated to 0x7fffffff) and then store the results in the destination buffer. */

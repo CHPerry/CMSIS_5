@@ -90,7 +90,7 @@ void arm_shift_q31(
   uint32_t blkCnt;                               /* loop counter */
   uint8_t sign = (shiftBits & 0x80);             /* Sign of shiftBits */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   q31_t in1, in2, in3, in4;                      /* Temporary input variables */
   q31_t out1, out2, out3, out4;                  /* Temporary output variables */
@@ -99,11 +99,11 @@ void arm_shift_q31(
   blkCnt = blockSize >> 2u;
 
 
-  if(sign == 0u)
+  if (sign == 0u)
   {
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* C = A  << shiftBits */
       /* Shift the input and then store the results in the destination buffer. */
@@ -113,10 +113,10 @@ void arm_shift_q31(
       in3 = *(pSrc + 2);
       out2 = in2 << shiftBits;
       in4 = *(pSrc + 3);
-      if(in1 != (out1 >> shiftBits))
+      if (in1 != (out1 >> shiftBits))
         out1 = 0x7FFFFFFF ^ (in1 >> 31);
 
-      if(in2 != (out2 >> shiftBits))
+      if (in2 != (out2 >> shiftBits))
         out2 = 0x7FFFFFFF ^ (in2 >> 31);
 
       *pDst = out1;
@@ -124,10 +124,10 @@ void arm_shift_q31(
       *(pDst + 1) = out2;
       out4 = in4 << shiftBits;
 
-      if(in3 != (out3 >> shiftBits))
+      if (in3 != (out3 >> shiftBits))
         out3 = 0x7FFFFFFF ^ (in3 >> 31);
 
-      if(in4 != (out4 >> shiftBits))
+      if (in4 != (out4 >> shiftBits))
         out4 = 0x7FFFFFFF ^ (in4 >> 31);
 
       *(pDst + 2) = out3;
@@ -146,7 +146,7 @@ void arm_shift_q31(
 
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* C = A >>  shiftBits */
       /* Shift the input and then store the results in the destination buffer. */
@@ -181,10 +181,10 @@ void arm_shift_q31(
   /* Initialize blkCnt with number of samples */
   blkCnt = blockSize;
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = A (>> or <<) shiftBits */
     /* Shift the input and then store the result in the destination buffer. */

@@ -84,7 +84,7 @@ arm_status arm_fir_interpolate_init_q15(
   arm_status status;
 
   /* The filter length must be a multiple of the interpolation factor */
-  if((numTaps % L) != 0u)
+  if ((numTaps % L) != 0u)
   {
     /* Set status as ARM_MATH_LENGTH_ERROR */
     status = ARM_MATH_LENGTH_ERROR;

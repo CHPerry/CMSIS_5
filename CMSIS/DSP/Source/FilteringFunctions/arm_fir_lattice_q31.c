@@ -63,7 +63,7 @@
  * In order to avoid overflows the input signal must be scaled down by 2*log2(numStages) bits.    
  */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -89,7 +89,7 @@ void arm_fir_lattice_q31(
 
   /* First part of the processing with loop unrolling.  Compute 2 outputs at a time.        
      a second loop below computes the remaining 1 sample. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* f0(n) = x(n) */
     fcurr1 = *pSrc++;
@@ -138,7 +138,7 @@ void arm_fir_lattice_q31(
     stageCnt = (numStages - 1u);
 
     /* stage loop */
-    while(stageCnt > 0u)
+    while (stageCnt > 0u)
     {
 
       /* Read the reflection coefficient */
@@ -187,7 +187,7 @@ void arm_fir_lattice_q31(
    ** No loop unrolling is used. */
   blkCnt = blockSize % 0x2u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* f0(n) = x(n) */
     fcurr1 = *pSrc++;
@@ -223,7 +223,7 @@ void arm_fir_lattice_q31(
     stageCnt = (numStages - 1u);
 
     /* stage loop */
-    while(stageCnt > 0u)
+    while (stageCnt > 0u)
     {
       /* Read the reflection coefficient */
       k = *pk++;
@@ -285,7 +285,7 @@ void arm_fir_lattice_q31(
 
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* f0(n) = x(n) */
     fcurr = *pSrc++;
@@ -314,7 +314,7 @@ void arm_fir_lattice_q31(
     stageCnt = (numStages - 1u);
 
     /* stage loop */
-    while(stageCnt > 0u)
+    while (stageCnt > 0u)
     {
       /* read g2(n) from state buffer */
       gcurr = *px;
@@ -345,7 +345,7 @@ void arm_fir_lattice_q31(
 
 }
 
-#endif /*   #ifndef ARM_MATH_CM0_FAMILY */
+#endif /*   #if defined(ARM_MATH_DSP) */
 
 
 /**    

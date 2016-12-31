@@ -91,7 +91,7 @@ void arm_cfft_radix4_q31(
   const arm_cfft_radix4_instance_q31 * S,
   q31_t * pSrc)
 {
-  if(S->ifftFlag == 1u)
+  if (S->ifftFlag == 1u)
   {
     /* Complex IFFT radix-4 */
     arm_radix4_butterfly_inverse_q31(pSrc, S->fftLen, S->pTwiddle,
@@ -105,7 +105,7 @@ void arm_cfft_radix4_q31(
   }
 
 
-  if(S->bitReverseFlag == 1u)
+  if (S->bitReverseFlag == 1u)
   {
     /*  Bit Reversal */
     arm_bitreversal_q31(pSrc, S->fftLen, S->bitRevFactor, S->pBitRevTable);
@@ -290,7 +290,7 @@ void arm_radix4_butterfly_q31(
     /*  Updating input index */
     i0 = i0 + 1u;
 
-  } while(--j);
+  } while (--j);
 
   /* end of first stage process */
 
@@ -528,7 +528,7 @@ void arm_radix4_butterfly_q31(
     /*  Twiddle coefficients index modifier */
     ia1 = ia1 + twidCoefModifier;
 
-  } while(--j);
+  } while (--j);
 
   /* end of first stage process */
 
@@ -754,7 +754,7 @@ void arm_radix4_butterfly_q31(
     *ptr1++ = yd_out;
 
 
-  } while(--j);
+  } while (--j);
 
   /* output is in 11.21(q21) format for the 1024 point */
   /* output is in 9.23(q23) format for the 256 point */
@@ -944,7 +944,7 @@ void arm_radix4_butterfly_inverse_q31(
     /*  Updating input index */
     i0 = i0 + 1u;
 
-  } while(--j);
+  } while (--j);
 
   /* data is in 5.27(q27) format */
   /* each stage provides two down scaling of the input */
@@ -1172,7 +1172,7 @@ void arm_radix4_butterfly_inverse_q31(
     /*  Twiddle coefficients index modifier */
     ia1 = ia1 + twidCoefModifier;
 
-  } while(--j);
+  } while (--j);
 
   /* data is in 5.27(q27) format */
   /* each stage provides two down scaling of the input */
@@ -1393,7 +1393,7 @@ void arm_radix4_butterfly_inverse_q31(
     *ptr1++ = xd_out;
     *ptr1++ = yd_out;
 
-  } while(--j);
+  } while (--j);
 
   /* output is in 11.21(q21) format for the 1024 point */
   /* output is in 9.23(q23) format for the 256 point */

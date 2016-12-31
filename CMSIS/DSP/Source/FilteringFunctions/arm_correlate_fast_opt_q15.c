@@ -119,7 +119,7 @@ void arm_correlate_fast_opt_q15(
    * (srcALen - srcBLen) zeroes has to included in the starting of the output buffer */
   /* If srcALen < srcBLen,        
    * (srcALen - srcBLen) zeroes has to included in the ending of the output buffer */
-  if(srcALen >= srcBLen)
+  if (srcALen >= srcBLen)
   {
     /* Initialization of inputA pointer */
     pIn1 = (pSrcA);
@@ -185,7 +185,7 @@ void arm_correlate_fast_opt_q15(
 
   /* First part of the processing with loop unrolling copies 4 data points at a time.       
    ** a second loop below copies for the remaining 1 to 3 samples. */
-  while(j > 0u)
+  while (j > 0u)
   {
     /* copy second buffer in reversal manner */
     *pScr++ = *pIn1++;
@@ -201,7 +201,7 @@ void arm_correlate_fast_opt_q15(
    ** No loop unrolling is used. */
   j = srcALen % 0x4u;
 
-  while(j > 0u)
+  while (j > 0u)
   {
     /* copy second buffer in reversal manner for remaining samples */
     *pScr++ = *pIn1++;
@@ -227,7 +227,7 @@ void arm_correlate_fast_opt_q15(
 
   /* First part of the processing with loop unrolling copies 4 data points at a time.       
    ** a second loop below copies for the remaining 1 to 3 samples. */
-  while(j > 0u)
+  while (j > 0u)
   {
     /* copy second buffer in reversal manner */
     *pScr++ = 0;
@@ -243,7 +243,7 @@ void arm_correlate_fast_opt_q15(
    ** No loop unrolling is used. */
   j = (srcBLen - 1u) % 0x4u;
 
-  while(j > 0u)
+  while (j > 0u)
   {
     /* copy second buffer in reversal manner for remaining samples */
     *pScr++ = 0;
@@ -261,7 +261,7 @@ void arm_correlate_fast_opt_q15(
   /* Actual correlation process starts here */
   blkCnt = (srcALen + srcBLen - 1u) >> 2;
 
-  while(blkCnt > 0)
+  while (blkCnt > 0)
   {
     /* Initialze temporary scratch pointer as scratch1 */
     pScr = pScratch;
@@ -280,7 +280,7 @@ void arm_correlate_fast_opt_q15(
 
     tapCnt = (srcBLen) >> 2u;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
 
 #ifndef UNALIGNED_SUPPORT_DISABLE
@@ -418,7 +418,7 @@ void arm_correlate_fast_opt_q15(
     /* apply same above for remaining samples of smaller length sequence */
     tapCnt = (srcBLen) & 3u;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
 
       /* accumlate the results */
@@ -458,7 +458,7 @@ void arm_correlate_fast_opt_q15(
   blkCnt = (srcALen + srcBLen - 1u) & 0x3;
 
   /* Calculate correlation for remaining samples of Bigger length sequence */
-  while(blkCnt > 0)
+  while (blkCnt > 0)
   {
     /* Initialze temporary scratch pointer as scratch1 */
     pScr = pScratch;
@@ -468,7 +468,7 @@ void arm_correlate_fast_opt_q15(
 
     tapCnt = (srcBLen) >> 1u;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
 
       acc0 += (*pScr++ * *pIn2++);
@@ -481,7 +481,7 @@ void arm_correlate_fast_opt_q15(
     tapCnt = (srcBLen) & 1u;
 
     /* apply same above for remaining samples of smaller length sequence */
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
 
       /* accumlate the results */

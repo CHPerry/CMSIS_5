@@ -196,7 +196,7 @@ uint32_t blockSize)
       
       /* First part of the processing with loop unrolling.  Compute 16 outputs at a time.       
        ** a second loop below computes the remaining 1 to 15 samples. */
-      while(sample > 0u) {
+      while (sample > 0u) {
 
          /* y[n] = b0 * x[n] + d1 */
          /* d1 = b1 * x[n] + a1 * y[n] + d2 */
@@ -379,7 +379,7 @@ uint32_t blockSize)
       }
 
       sample = blockSize & 0xFu;
-      while(sample > 0u) {
+      while (sample > 0u) {
          Xn1 = *pIn;         
          acc1 = b0 * Xn1 + d1;
          
@@ -410,7 +410,7 @@ uint32_t blockSize)
       /*Reset the output working pointer */ 
       pOut = pDst; 
 
-   } while(stage > 0u);
+   } while (stage > 0u);
 	
 #elif defined(ARM_MATH_CM0_FAMILY)
 
@@ -432,7 +432,7 @@ uint32_t blockSize)
 
       sample = blockSize;
 
-      while(sample > 0u)
+      while (sample > 0u)
       {
          /* Read the input */
          Xn1 = *pIn++;
@@ -467,7 +467,7 @@ uint32_t blockSize)
       /* decrement the loop counter */
       stage--;
 
-   } while(stage > 0u);
+   } while (stage > 0u);
 	 
 #else
 
@@ -497,7 +497,7 @@ uint32_t blockSize)
 
       /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.       
    ** a second loop below computes the remaining 1 to 3 samples. */
-      while(sample > 0u) {
+      while (sample > 0u) {
 
          /* y[n] = b0 * x[n] + d1 */
          /* d1 = b1 * x[n] + a1 * y[n] + d2 */
@@ -560,7 +560,7 @@ uint32_t blockSize)
       }
 
       sample = blockSize & 0x3u;
-      while(sample > 0u) {
+      while (sample > 0u) {
          Xn1 = *pIn++;
 
          p0 = b0 * Xn1; 
@@ -591,7 +591,7 @@ uint32_t blockSize)
       /* decrement the loop counter */
       stage--;
 
-   } while(stage > 0u);
+   } while (stage > 0u);
 
 #endif 
 

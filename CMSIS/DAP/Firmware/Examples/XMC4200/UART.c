@@ -365,7 +365,7 @@ static ARM_USART_CAPABILITIES UART_GetCapabilities (UART_RESOURCES  *uart) {
   \return      \ref ARM_USART_STATUS
 */
 static int32_t UART_Initialize (ARM_USART_SignalEvent_t cb_event, UART_RESOURCES *uart) {
-	if(((uart->info->flags)&UART_INITIALIZED) == 0)
+	if (((uart->info->flags)&UART_INITIALIZED) == 0)
 	{
   // Initialize USART Run-Time Resources
   uart->info->cb_event= cb_event;
@@ -472,11 +472,11 @@ static int32_t UART_Uninitialize (UART_RESOURCES *uart) {
   \return      \ref USART_STATUS
 */
 static int32_t UART_PowerControl (ARM_POWER_STATE state, UART_RESOURCES  *uart) {
-	if(state == ARM_POWER_FULL) 
+	if (state == ARM_POWER_FULL) 
 		{
-	     if(((uart->info->flags)&UART_POWERED) == 0)
+	     if (((uart->info->flags)&UART_POWERED) == 0)
 	     {
-	       if(uart->tx_fifo_size_num > uart->rx_fifo_size_num)
+	       if (uart->tx_fifo_size_num > uart->rx_fifo_size_num)
 	       {
 	          uart->info->tx_fifo_pointer = 0;
 		        uart->info->rx_fifo_pointer = uart->tx_fifo_size_num;
@@ -492,7 +492,7 @@ static int32_t UART_PowerControl (ARM_POWER_STATE state, UART_RESOURCES  *uart) 
 	        XMC_UART_CH_SetInputSource(uart->uart,XMC_UART_CH_INPUT_RXD,uart->input);
           NVIC_ClearPendingIRQ(uart->irq_rx_num);
 	        NVIC_ClearPendingIRQ(uart->irq_tx_num);
-#if(UC_FAMILY == XMC4)
+#if (UC_FAMILY == XMC4)
           NVIC_SetPriority(uart->irq_rx_num,NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0U,0U)); 
 		      NVIC_SetPriority(uart->irq_tx_num,NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0U,0U)); 
 #else
@@ -505,7 +505,7 @@ static int32_t UART_PowerControl (ARM_POWER_STATE state, UART_RESOURCES  *uart) 
 	        uart->info->flags |= UART_POWERED;
 			}
     } 
-    else if(state == ARM_POWER_OFF ) 
+    else if (state == ARM_POWER_OFF ) 
     {
       XMC_UART_CH_Stop(uart->uart);	
 		  uart->info->flags &=~UART_POWERED;
@@ -577,12 +577,12 @@ static int32_t UART_Send (const void *data, uint32_t num, UART_RESOURCES  *uart)
   uart->info->xfer.tx_buf = (uint8_t *)data;
   uart->info->xfer.tx_num = num;
   uart->info->xfer.tx_cnt = 0;
-#if(UC_FAMILY == XMC4)
-  if((uart->irq_tx_num) < 90)
+#if (UC_FAMILY == XMC4)
+  if ((uart->irq_tx_num) < 90)
   { 
 	  SRno= uart->irq_tx_num - 84;
   }
-  else if((uart->irq_tx_num) < 96)
+  else if ((uart->irq_tx_num) < 96)
   {
    SRno=uart->irq_tx_num - 90;
   }
@@ -594,7 +594,7 @@ static int32_t UART_Send (const void *data, uint32_t num, UART_RESOURCES  *uart)
   SRno=uart->irq_tx_num - 9;
 #endif
 	
-  if(uart->rx_fifo_size_reg==NO_FIFO)
+  if (uart->rx_fifo_size_reg==NO_FIFO)
   {
     XMC_USIC_CH_EnableEvent(uart->uart,XMC_USIC_CH_EVENT_TRANSMIT_BUFFER);
 		XMC_USIC_CH_SetInterruptNodePointer(uart->uart,XMC_USIC_CH_INTERRUPT_NODE_POINTER_TRANSMIT_BUFFER,SRno);
@@ -674,11 +674,11 @@ static int32_t UART_Receive (void *data, uint32_t num,UART_RESOURCES *uart) {
   if (uart->info->status.rx_busy == 1) 
     return ARM_DRIVER_ERROR_BUSY;
 #if (UC_FAMILY == XMC4) 	
-  if((uart->irq_rx_num) < 90)
+  if ((uart->irq_rx_num) < 90)
   { 
 	  SRno= uart->irq_rx_num - 84;
   }
-  else if((uart->irq_rx_num) < 96)
+  else if ((uart->irq_rx_num) < 96)
   {
     SRno=uart->irq_rx_num - 90;
   }
@@ -707,7 +707,7 @@ static int32_t UART_Receive (void *data, uint32_t num,UART_RESOURCES *uart) {
   uart->info->xfer.rx_buf = (uint8_t *)data;
   uart->info->xfer.rx_cnt = 0;														
 	
-	if(uart->rx_fifo_size_reg==NO_FIFO)
+	if (uart->rx_fifo_size_reg==NO_FIFO)
   {
     XMC_USIC_CH_EnableEvent(uart->uart,XMC_USIC_CH_EVENT_STANDARD_RECEIVE |
 		                                   XMC_USIC_CH_EVENT_ALTERNATIVE_RECEIVE);
@@ -721,7 +721,7 @@ static int32_t UART_Receive (void *data, uint32_t num,UART_RESOURCES *uart) {
 		                                          XMC_USIC_CH_RXFIFO_EVENT_CONF_ALTERNATE);
     XMC_USIC_CH_RXFIFO_SetInterruptNodePointer(uart->uart,XMC_USIC_CH_RXFIFO_INTERRUPT_NODE_POINTER_STANDARD,SRno);
     XMC_USIC_CH_RXFIFO_SetInterruptNodePointer(uart->uart,XMC_USIC_CH_RXFIFO_INTERRUPT_NODE_POINTER_ALTERNATE,SRno);
-	if(num <= uart->rx_fifo_size_num)
+	if (num <= uart->rx_fifo_size_num)
 	{
 	  XMC_USIC_CH_RXFIFO_Configure(uart->uart,uart->info->rx_fifo_pointer,(XMC_USIC_CH_FIFO_SIZE_t)uart->rx_fifo_size_reg,(uart->info->xfer.rx_num)- 1U); 
 	}
@@ -1072,7 +1072,7 @@ static int32_t UART_Control (uint32_t          control,
 		 
 		  // Configure TX pin		
 	    uart->pin_tx_config->mode = (XMC_GPIO_MODE_t)(XMC_GPIO_MODE_OUTPUT_OPEN_DRAIN | uart->pin_tx_alternate_function); 
-#if(UC_FAMILY == XMC4)
+#if (UC_FAMILY == XMC4)
 
 		  uart->pin_tx_config->output_strength = XMC_GPIO_OUTPUT_STRENGTH_STRONG_MEDIUM_EDGE;
 #endif
@@ -1110,7 +1110,7 @@ static int32_t UART_Control (uint32_t          control,
 			 {
 	       uart->pin_tx_config->mode =(XMC_GPIO_MODE_t)(XMC_GPIO_MODE_OUTPUT_PUSH_PULL | uart->pin_tx_alternate_function);
        }
-#if(UC_FAMILY == XMC4)
+#if (UC_FAMILY == XMC4)
 
 			   uart->pin_tx_config->output_strength = XMC_GPIO_OUTPUT_STRENGTH_STRONG_MEDIUM_EDGE;
 #endif
@@ -1284,10 +1284,10 @@ static void UART_IRQHandler (UART_RESOURCES  *uart,uint8_t irq) {
 	// Read interrupt
   if (uart->irq_rx_num== irq) 
 	{
-    if(uart->rx_fifo_size_reg==NO_FIFO)
+    if (uart->rx_fifo_size_reg==NO_FIFO)
     {
 	     uart->info->xfer.rx_buf[uart->info->xfer.rx_cnt++] =(uint8_t)(uint8_t)XMC_UART_CH_GetReceivedData(uart->uart);;
-	     if(uart->info->xfer.rx_cnt == uart->info->xfer.rx_num)
+	     if (uart->info->xfer.rx_cnt == uart->info->xfer.rx_num)
 	     {	 
 		     // Clear RX busy flag and set receive transfer complete event
 			   uart->info->status.rx_busy = 0;
@@ -1299,11 +1299,11 @@ static void UART_IRQHandler (UART_RESOURCES  *uart,uint8_t irq) {
 	  }
 	  else
 	  {
-      while((XMC_USIC_CH_RXFIFO_IsEmpty(uart->uart) == false))
+      while ((XMC_USIC_CH_RXFIFO_IsEmpty(uart->uart) == false))
       { 
         /* Read the data from FIFO buffer */
         uart->info->xfer.rx_buf[uart->info->xfer.rx_cnt++] =(uint8_t)XMC_UART_CH_GetReceivedData(uart->uart);
-	      if(uart->info->xfer.rx_cnt == uart->info->xfer.rx_num)
+	      if (uart->info->xfer.rx_cnt == uart->info->xfer.rx_num)
         {	 
 
           // Clear RX busy flag and set receive transfer complete event
@@ -1315,7 +1315,7 @@ static void UART_IRQHandler (UART_RESOURCES  *uart,uint8_t irq) {
 			    break;
        }
 	   }
-	   if( (uart->info->xfer.rx_num-uart->info->xfer.rx_cnt) < uart->rx_fifo_size_num)
+	   if ( (uart->info->xfer.rx_num-uart->info->xfer.rx_cnt) < uart->rx_fifo_size_num)
 	   {
 	      XMC_USIC_CH_RXFIFO_Configure(uart->uart,uart->info->rx_fifo_pointer,(XMC_USIC_CH_FIFO_SIZE_t)uart->rx_fifo_size_reg,(uart->info->xfer.rx_num-uart->info->xfer.rx_cnt)- 1U); 
 	   }
@@ -1328,9 +1328,9 @@ static void UART_IRQHandler (UART_RESOURCES  *uart,uint8_t irq) {
   // Transmit data register empty
   if (uart->irq_tx_num == irq)
   {
-	 if(uart->info->xfer.tx_num > uart->info->xfer.tx_cnt)	
+	 if (uart->info->xfer.tx_num > uart->info->xfer.tx_cnt)	
 	 {
-	  if(uart->rx_fifo_size_reg==NO_FIFO)
+	  if (uart->rx_fifo_size_reg==NO_FIFO)
     {
 			XMC_UART_CH_Transmit(uart->uart,uart->info->xfer.tx_buf[uart->info->xfer.tx_cnt++]);
 			
@@ -1338,9 +1338,9 @@ static void UART_IRQHandler (UART_RESOURCES  *uart,uint8_t irq) {
 	  else 
 		{
       /* Write to FIFO till Fifo is full */
-      while((XMC_USIC_CH_TXFIFO_IsFull(uart->uart) == false))
+      while ((XMC_USIC_CH_TXFIFO_IsFull(uart->uart) == false))
       { 	
-				 if(uart->info->xfer.tx_num > uart->info->xfer.tx_cnt)	
+				 if (uart->info->xfer.tx_num > uart->info->xfer.tx_cnt)	
 	      {	
 	     		XMC_UART_CH_Transmit(uart->uart,uart->info->xfer.tx_buf[uart->info->xfer.tx_cnt++]);
 	      }
@@ -1353,9 +1353,9 @@ static void UART_IRQHandler (UART_RESOURCES  *uart,uint8_t irq) {
 	}
 	else
   {
-    if(XMC_USIC_CH_TXFIFO_IsEmpty(uart->uart) == true)
+    if (XMC_USIC_CH_TXFIFO_IsEmpty(uart->uart) == true)
     { 
-	    if(uart->rx_fifo_size_reg==NO_FIFO)
+	    if (uart->rx_fifo_size_reg==NO_FIFO)
       {
 				/* Disable standard transmit and error event interrupt */
 	      XMC_USIC_CH_DisableEvent(uart->uart,XMC_USIC_CH_EVENT_TRANSMIT_BUFFER);
@@ -1365,7 +1365,7 @@ static void UART_IRQHandler (UART_RESOURCES  *uart,uint8_t irq) {
 		    /* Disable standard transmit and error event interrupt */
 	      XMC_USIC_CH_TXFIFO_DisableEvent(uart->uart,XMC_USIC_CH_TXFIFO_EVENT_CONF_STANDARD);
 		  }
-		  while((XMC_USIC_CH_GetTransmitBufferStatus(uart->uart)& XMC_USIC_CH_TBUF_STATUS_BUSY));
+		  while ((XMC_USIC_CH_GetTransmitBufferStatus(uart->uart)& XMC_USIC_CH_TBUF_STATUS_BUSY));
 		  if (uart->info->cb_event) uart->info->cb_event(ARM_USART_EVENT_SEND_COMPLETE);	
 		  // Clear TX busy flag
       uart->info->status.tx_busy=0;		

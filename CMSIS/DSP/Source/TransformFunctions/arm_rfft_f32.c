@@ -106,7 +106,7 @@ void arm_rfft_f32(
 
 
   /* Calculation of Real IFFT of input */
-  if(S->ifftFlagR == 1u)
+  if (S->ifftFlagR == 1u)
   {
     /*  Real IFFT core process */
     arm_split_rifft_f32(pSrc, S->fftLenBy2, S->pTwiddleAReal,
@@ -120,7 +120,7 @@ void arm_rfft_f32(
                                      S_CFFT->onebyfftLen);
 
     /* Bit reversal process */
-    if(S->bitReverseFlagR == 1u)
+    if (S->bitReverseFlagR == 1u)
     {
       arm_bitreversal_f32(pDst, S_CFFT->fftLen,
                           S_CFFT->bitRevFactor, S_CFFT->pBitRevTable);
@@ -136,7 +136,7 @@ void arm_rfft_f32(
                              S_CFFT->pTwiddle, S_CFFT->twidCoefModifier);
 
     /* Bit reversal process */
-    if(S->bitReverseFlagR == 1u)
+    if (S->bitReverseFlagR == 1u)
     {
       arm_bitreversal_f32(pSrc, S_CFFT->fftLen,
                           S_CFFT->bitRevFactor, S_CFFT->pBitRevTable);
@@ -186,7 +186,7 @@ void arm_split_rfft_f32(
 
   i = fftLen - 1u;
 
-  while(i > 0u)
+  while (i > 0u)
   {
     /*    
        outR = (pSrc[2 * i] * pATable[2 * i] - pSrc[2 * i + 1] * pATable[2 * i + 1]    
@@ -275,7 +275,7 @@ void arm_split_rifft_f32(
   pCoefA = &pATable[0];
   pCoefB = &pBTable[0];
 
-  while(fftLen > 0u)
+  while (fftLen > 0u)
   {
     /*    
        outR = (pIn[2 * i] * pATable[2 * i] + pIn[2 * i + 1] * pATable[2 * i + 1] +    

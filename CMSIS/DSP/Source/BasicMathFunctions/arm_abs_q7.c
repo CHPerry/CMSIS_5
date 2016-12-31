@@ -74,7 +74,7 @@ void arm_abs_q7(
   uint32_t blkCnt;                               /* loop counter */
   q7_t in;                                       /* Input value1 */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
   q31_t in1, in2, in3, in4;                      /* temporary input variables */
@@ -85,7 +85,7 @@ void arm_abs_q7(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = |A| */
     /* Read inputs */
@@ -138,7 +138,7 @@ void arm_abs_q7(
 
 #endif /* #define ARM_MATH_CM0_FAMILY */
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = |A| */
     /* Read the input */

@@ -72,7 +72,7 @@ void arm_cmplx_mult_real_q31(
 {
   q31_t inA1;                                    /* Temporary variable to store input value */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
   uint32_t blkCnt;                               /* loop counters */
@@ -85,7 +85,7 @@ void arm_cmplx_mult_real_q31(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C[2 * i] = A[2 * i] * B[i].            */
     /* C[2 * i + 1] = A[2 * i + 1] * B[i].        */
@@ -165,7 +165,7 @@ void arm_cmplx_mult_real_q31(
    ** No loop unrolling is used. */
   blkCnt = numSamples % 0x4u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C[2 * i] = A[2 * i] * B[i].            */
     /* C[2 * i + 1] = A[2 * i + 1] * B[i].        */
@@ -199,7 +199,7 @@ void arm_cmplx_mult_real_q31(
 
   /* Run the below code for Cortex-M0 */
 
-  while(numSamples > 0u)
+  while (numSamples > 0u)
   {
     /* realOut = realA * realB.            */
     /* imagReal = imagA * realB.               */
@@ -214,7 +214,7 @@ void arm_cmplx_mult_real_q31(
     numSamples--;
   }
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
 }
 

@@ -69,7 +69,7 @@ q31_t arm_cos_q31(
 
   /* add 0.25 (pi/2) to read sine table */
   x = (uint32_t)x + 0x20000000;
-  if(x < 0)
+  if (x < 0)
   {   /* convert negative numbers to corresponding positive ones */
       x = (uint32_t)x + 0x80000000;
   }

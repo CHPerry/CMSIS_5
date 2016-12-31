@@ -115,7 +115,7 @@ arm_status arm_mat_cmplx_mult_q15(
 
 #ifdef ARM_MATH_MATRIX_CHECK
   /* Check for matrix mismatch condition */
-  if((pSrcA->numCols != pSrcB->numRows) ||
+  if ((pSrcA->numCols != pSrcB->numRows) ||
      (pSrcA->numRows != pDst->numRows) || (pSrcB->numCols != pDst->numCols))
   {
     /* Set status as ARM_MATH_SIZE_MISMATCH */
@@ -135,7 +135,7 @@ arm_status arm_mat_cmplx_mult_q15(
 
       /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.      
        ** a second loop below computes the remaining 1 to 3 samples. */
-      while(col > 0u)
+      while (col > 0u)
       {
 #ifdef UNALIGNED_SUPPORT_DISABLE
         /* Read two elements from the row */
@@ -182,7 +182,7 @@ arm_status arm_mat_cmplx_mult_q15(
        ** No loop unrolling is used. */
       col = numColsB % 0x4u;
 
-      while(col > 0u)
+      while (col > 0u)
       {
         /* Read two elements from the row */
         in = *pInB++;
@@ -232,7 +232,7 @@ arm_status arm_mat_cmplx_mult_q15(
        ** No loop unrolling is used. */
       col = numColsB % 0x4u;
 
-      while(col > 0u)
+      while (col > 0u)
       {
         /* Read two elements from the row */
         in = *__SIMD32(pInB)++;
@@ -252,7 +252,7 @@ arm_status arm_mat_cmplx_mult_q15(
       /* Decrement the row loop counter */
       row--;
 
-    } while(row > 0u);
+    } while (row > 0u);
 
     /* Reset the variables for the usage in the following multiplication process */
     row = numRowsA;
@@ -285,7 +285,7 @@ arm_status arm_mat_cmplx_mult_q15(
 
 
         /* matrix multiplication */
-        while(colCnt > 0u)
+        while (colCnt > 0u)
         {
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
 
@@ -357,7 +357,7 @@ arm_status arm_mat_cmplx_mult_q15(
         }
 
         /* process odd column samples */
-        if((numColsA & 0x1u) > 0u)
+        if ((numColsA & 0x1u) > 0u)
         {
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
 
@@ -402,14 +402,14 @@ arm_status arm_mat_cmplx_mult_q15(
         /* Decrement the column loop counter */
         col--;
 
-      } while(col > 0u);
+      } while (col > 0u);
 
       i = i + numColsA;
 
       /* Decrement the row loop counter */
       row--;
 
-    } while(row > 0u);
+    } while (row > 0u);
 
     /* set status as ARM_MATH_SUCCESS */
     status = ARM_MATH_SUCCESS;

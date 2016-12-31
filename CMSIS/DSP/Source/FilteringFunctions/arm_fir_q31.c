@@ -80,7 +80,7 @@ void arm_fir_q31(
   q31_t *pStateCurnt;                            /* Points to the current sample of the state */
 
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -112,7 +112,7 @@ void arm_fir_q31(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Copy three new input samples into the state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -138,7 +138,7 @@ void arm_fir_q31(
     /* Loop unrolling.  Process 3 taps at a time. */
     i = tapCnt;
 
-    while(i > 0u)
+    while (i > 0u)
     {
       /* Read the b[numTaps] coefficient */
       c0 = *pb;
@@ -180,7 +180,7 @@ void arm_fir_q31(
 
     i = tapCntN3;
 
-    while(i > 0u)
+    while (i > 0u)
     {
       /* Read coefficients */
       c0 = *(pb++);
@@ -217,7 +217,7 @@ void arm_fir_q31(
   /* If the blockSize is not a multiple of 3, compute any remaining output samples here.    
    ** No loop unrolling is used. */
 
-  while(blockSize > 0u)
+  while (blockSize > 0u)
   {
     /* Copy one sample at a time into state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -238,7 +238,7 @@ void arm_fir_q31(
     {
       acc0 += (q63_t) * (px++) * (*(pb++));
       i--;
-    } while(i > 0u);
+    } while (i > 0u);
 
     /* The result is in 2.62 format.  Convert to 1.31    
      ** Then store the output in the destination buffer. */
@@ -261,7 +261,7 @@ void arm_fir_q31(
   tapCnt = (numTaps - 1u) >> 2u;
 
   /* copy data */
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
     *pStateCurnt++ = *pState++;
@@ -276,7 +276,7 @@ void arm_fir_q31(
   tapCnt = (numTaps - 1u) % 0x4u;
 
   /* Copy the remaining q31_t data */
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -301,7 +301,7 @@ void arm_fir_q31(
   /* Initialize blkCnt with blockSize */
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Copy one sample at a time into state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -323,7 +323,7 @@ void arm_fir_q31(
       /* acc =  b[numTaps-1] * x[n-numTaps-1] + b[numTaps-2] * x[n-numTaps-2] + b[numTaps-3] * x[n-numTaps-3] +...+ b[0] * x[0] */
       acc += (q63_t) * px++ * *pb++;
       i--;
-    } while(i > 0u);
+    } while (i > 0u);
 
     /* The result is in 2.62 format.  Convert to 1.31         
      ** Then store the output in the destination buffer. */
@@ -347,7 +347,7 @@ void arm_fir_q31(
   tapCnt = numTaps - 1u;
 
   /* Copy the data */
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -356,7 +356,7 @@ void arm_fir_q31(
   }
 
 
-#endif /*  #ifndef ARM_MATH_CM0_FAMILY */
+#endif /*  #if defined(ARM_MATH_DSP) */
 
 }
 

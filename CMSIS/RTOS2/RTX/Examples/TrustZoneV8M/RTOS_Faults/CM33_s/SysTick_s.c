@@ -70,7 +70,7 @@ void InitWatchdog (uint32_t StartSeconds)  {
 // \param Food    token obtained by StartWatchdog_s
 __attribute__((cmse_nonsecure_entry))
 void FeedWatchdog_s (uint32_t Food)  {
-  if( Food == ExpectedToken ) {
+  if ( Food == ExpectedToken ) {
     Timeout = TIMEOUT_VALUE;
   }
 }

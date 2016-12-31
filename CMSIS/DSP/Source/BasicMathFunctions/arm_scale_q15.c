@@ -75,7 +75,7 @@ void arm_scale_q15(
   int8_t kShift = 15 - shift;                    /* shift to apply after scaling */
   uint32_t blkCnt;                               /* loop counter */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
 /* Run the below code for Cortex-M4 and Cortex-M3 */
   q15_t in1, in2, in3, in4;
@@ -88,7 +88,7 @@ void arm_scale_q15(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.        
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Reading 2 inputs from memory */
     inA1 = *__SIMD32(pSrc)++;
@@ -126,7 +126,7 @@ void arm_scale_q15(
    ** No loop unrolling is used. */
   blkCnt = blockSize % 0x4u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = A * scale */
     /* Scale the input and then store the result in the destination buffer. */
@@ -143,7 +143,7 @@ void arm_scale_q15(
   /* Initialize blkCnt with number of samples */
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = A * scale */
     /* Scale the input and then store the result in the destination buffer. */
@@ -153,7 +153,7 @@ void arm_scale_q15(
     blkCnt--;
   }
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
 }
 

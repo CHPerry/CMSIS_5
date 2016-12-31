@@ -103,7 +103,7 @@ float32_t arm_sin_f32(
   n = (int32_t) in;
 
   /* Make negative values towards -infinity */
-  if(x < 0.0f)
+  if (x < 0.0f)
   {
     n--;
   }

@@ -79,11 +79,11 @@ arm_status arm_mat_add_f32(
   float32_t *pIn2 = pSrcB->pData;                /* input data matrix pointer B  */
   float32_t *pOut = pDst->pData;                 /* output data matrix pointer   */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   float32_t inA1, inA2, inB1, inB2, out1, out2;  /* temporary variables */
 
-#endif //      #ifndef ARM_MATH_CM0_FAMILY
+#endif //      #if defined(ARM_MATH_DSP)
 
   uint32_t numSamples;                           /* total number of elements in the matrix  */
   uint32_t blkCnt;                               /* loop counters */
@@ -91,7 +91,7 @@ arm_status arm_mat_add_f32(
 
 #ifdef ARM_MATH_MATRIX_CHECK
   /* Check for matrix mismatch condition */
-  if((pSrcA->numRows != pSrcB->numRows) ||
+  if ((pSrcA->numRows != pSrcB->numRows) ||
      (pSrcA->numCols != pSrcB->numCols) ||
      (pSrcA->numRows != pDst->numRows) || (pSrcA->numCols != pDst->numCols))
   {
@@ -105,14 +105,14 @@ arm_status arm_mat_add_f32(
     /* Total number of samples in the input matrix */
     numSamples = (uint32_t) pSrcA->numRows * pSrcA->numCols;
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
     /* Loop unrolling */
     blkCnt = numSamples >> 2u;
 
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* C(m,n) = A(m,n) + B(m,n) */
       /* Add and then store the results in the destination buffer. */
@@ -182,9 +182,9 @@ arm_status arm_mat_add_f32(
     /* Initialize blkCnt with number of samples */
     blkCnt = numSamples;
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* C(m,n) = A(m,n) + B(m,n) */
       /* Add and then store the results in the destination buffer. */

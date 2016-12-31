@@ -94,7 +94,7 @@ void arm_cfft_q15(
 {
     uint32_t L = S->fftLen;
 
-    if(ifftFlag == 1u)
+    if (ifftFlag == 1u)
     {
         switch (L) 
         {
@@ -135,7 +135,7 @@ void arm_cfft_q15(
         }  
     }
     
-    if( bitReverseFlag )
+    if ( bitReverseFlag )
         arm_bitreversal_16((uint16_t*)p1,S->bitRevLength,S->pBitRevTable);    
 }
 
@@ -151,7 +151,7 @@ void arm_cfft_radix4by2_q15(
     uint32_t i;
     uint32_t n2;
     q15_t p0, p1, p2, p3;
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
     q31_t T, S, R;
     q31_t coeff, out1, out2;
     const q15_t *pC = pCoef;
@@ -164,7 +164,7 @@ void arm_cfft_radix4by2_q15(
     
     n2 = fftLen >> 1; 
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
     for (i = n2; i > 0; i--)
     {
@@ -199,7 +199,7 @@ void arm_cfft_radix4by2_q15(
         pSl += 2;
     } 
     
-#else //    #ifndef ARM_MATH_CM0_FAMILY
+#else //    #if defined(ARM_MATH_DSP)
     
     ia = 0;
     for (i = 0; i < n2; i++)
@@ -224,7 +224,7 @@ void arm_cfft_radix4by2_q15(
                        ((int16_t) (((q31_t) xt * sinVal) >> 16)));
     } 
     
-#endif //    #ifndef ARM_MATH_CM0_FAMILY
+#endif //    #if defined(ARM_MATH_DSP)
     
     // first col
     arm_radix4_butterfly_q15( pSrc, n2, (q15_t*)pCoef, 2u);
@@ -258,7 +258,7 @@ void arm_cfft_radix4by2_inverse_q15(
     uint32_t i;
     uint32_t n2;
     q15_t p0, p1, p2, p3;
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
     q31_t T, S, R;
     q31_t coeff, out1, out2;
     const q15_t *pC = pCoef;
@@ -271,7 +271,7 @@ void arm_cfft_radix4by2_inverse_q15(
     
     n2 = fftLen >> 1; 
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
     for (i = n2; i > 0; i--)
     {
@@ -305,7 +305,7 @@ void arm_cfft_radix4by2_inverse_q15(
         pSl += 2;
     } 
     
-#else //    #ifndef ARM_MATH_CM0_FAMILY
+#else //    #if defined(ARM_MATH_DSP)
 
     ia = 0;
     for (i = 0; i < n2; i++)
@@ -329,7 +329,7 @@ void arm_cfft_radix4by2_inverse_q15(
                            ((int16_t) (((q31_t) xt * sinVal) >> 16)));
     } 
     
-#endif //    #ifndef ARM_MATH_CM0_FAMILY
+#endif //    #if defined(ARM_MATH_DSP)
 
     // first col
     arm_radix4_butterfly_inverse_q15( pSrc, n2, (q15_t*)pCoef, 2u);

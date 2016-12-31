@@ -72,7 +72,7 @@ void arm_mult_q15(
 {
   uint32_t blkCnt;                               /* loop counters */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
 /* Run the below code for Cortex-M4 and Cortex-M3 */
   q31_t inA1, inA2, inB1, inB2;                  /* temporary input variables */
@@ -84,7 +84,7 @@ void arm_mult_q15(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.        
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* read two samples at a time from sourceA */
     inA1 = *__SIMD32(pSrcA)++;
@@ -135,10 +135,10 @@ void arm_mult_q15(
   /* Initialize blkCnt with number of samples */
   blkCnt = blockSize;
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = A * B */
     /* Multiply the inputs and store the result in the destination buffer */

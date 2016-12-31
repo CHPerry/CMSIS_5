@@ -80,7 +80,7 @@ void arm_offset_f32(
 {
   uint32_t blkCnt;                               /* loop counter */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
 /* Run the below code for Cortex-M4 and Cortex-M3 */
   float32_t in1, in2, in3, in4;
@@ -90,7 +90,7 @@ void arm_offset_f32(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.        
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = A + offset */
     /* Add offset and then store the results in the destination buffer. */
@@ -147,9 +147,9 @@ void arm_offset_f32(
   /* Initialize blkCnt with number of samples */
   blkCnt = blockSize;
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = A + offset */
     /* Add offset and then store the result in the destination buffer. */

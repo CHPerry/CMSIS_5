@@ -92,7 +92,7 @@ void arm_cfft_radix4_q15(
   const arm_cfft_radix4_instance_q15 * S,
   q15_t * pSrc)
 {
-  if(S->ifftFlag == 1u)
+  if (S->ifftFlag == 1u)
   {
     /*  Complex IFFT radix-4  */
     arm_radix4_butterfly_inverse_q15(pSrc, S->fftLen, S->pTwiddle,
@@ -105,7 +105,7 @@ void arm_cfft_radix4_q15(
                              S->twidCoefModifier);
   }
 
-  if(S->bitReverseFlag == 1u)
+  if (S->bitReverseFlag == 1u)
   {
     /*  Bit Reversal */
     arm_bitreversal_q15(pSrc, S->fftLen, S->bitRevFactor, S->pBitRevTable);
@@ -167,7 +167,7 @@ void arm_radix4_butterfly_q15(
   uint32_t twidCoefModifier)
 {
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -364,7 +364,7 @@ void arm_radix4_butterfly_q15(
     /*  Twiddle coefficients index modifier */
     ic = ic + twidCoefModifier;
 
-  } while(--j);
+  } while (--j);
   /* data is in 4.11(q11) format */
 
   /* end of first stage process */
@@ -613,7 +613,7 @@ void arm_radix4_butterfly_q15(
 
 #endif /*      #ifndef ARM_MATH_BIG_ENDIAN     */
 
-  } while(--j);
+  } while (--j);
 
   /* end of last stage process */
 
@@ -780,7 +780,7 @@ void arm_radix4_butterfly_q15(
     /*  Updating input index */
     i0 = i0 + 1u;
 
-  } while(--j);
+  } while (--j);
   /* data is in 4.11(q11) format */
 
   /* end of first stage process */
@@ -1023,7 +1023,7 @@ void arm_radix4_butterfly_q15(
   /* output is in 7.9(q9) format for the 64 point  */
   /* output is in 5.11(q11) format for the 16 point  */
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
 }
 
@@ -1084,7 +1084,7 @@ void arm_radix4_butterfly_inverse_q15(
   uint32_t twidCoefModifier)
 {
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -1279,7 +1279,7 @@ void arm_radix4_butterfly_inverse_q15(
     /*  Twiddle coefficients index modifier */
     ic = ic + twidCoefModifier;
 
-  } while(--j);
+  } while (--j);
   /* data is in 4.11(q11) format */
 
   /* end of first stage process */
@@ -1528,7 +1528,7 @@ void arm_radix4_butterfly_inverse_q15(
 
 #endif /*      #ifndef ARM_MATH_BIG_ENDIAN     */
 
-  } while(--j);
+  } while (--j);
 
   /* end of last stage  process */
 
@@ -1683,7 +1683,7 @@ void arm_radix4_butterfly_inverse_q15(
     /*  Updating input index */
     i0 = i0 + 1u;
 
-  } while(--j);
+  } while (--j);
 
   /*  End of first stage process */
 
@@ -1919,6 +1919,6 @@ void arm_radix4_butterfly_inverse_q15(
   /* output is in 7.9(q9) format for the 64 point  */
   /* output is in 5.11(q11) format for the 16 point  */
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
 }

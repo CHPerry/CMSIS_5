@@ -71,7 +71,7 @@ void arm_sub_q7(
 {
   uint32_t blkCnt;                               /* loop counter */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
 /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -80,7 +80,7 @@ void arm_sub_q7(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = A - B */
     /* Subtract and then store the results in the destination buffer 4 samples at a time. */
@@ -94,7 +94,7 @@ void arm_sub_q7(
    ** No loop unrolling is used. */
   blkCnt = blockSize % 0x4u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = A - B */
     /* Subtract and then store the result in the destination buffer. */
@@ -111,7 +111,7 @@ void arm_sub_q7(
   /* Initialize blkCnt with number of samples */
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = A - B */
     /* Subtract and then store the result in the destination buffer. */
@@ -121,7 +121,7 @@ void arm_sub_q7(
     blkCnt--;
   }
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
 
 }

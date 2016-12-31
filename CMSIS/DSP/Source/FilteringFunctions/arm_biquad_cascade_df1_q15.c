@@ -80,7 +80,7 @@ void arm_biquad_cascade_df1_q15(
 {
 
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -126,7 +126,7 @@ void arm_biquad_cascade_df1_q15(
 
     /* First part of the processing with loop unrolling.  Compute 2 outputs at a time.    
      ** a second loop below computes the remaining 1 sample. */
-    while(sample > 0u)
+    while (sample > 0u)
     {
 
       /* Read the input */
@@ -233,7 +233,7 @@ void arm_biquad_cascade_df1_q15(
     /* If the blockSize is not a multiple of 2, compute any remaining output samples here.    
      ** No loop unrolling is used. */
 
-    if((blockSize & 0x1u) != 0u)
+    if ((blockSize & 0x1u) != 0u)
     {
       /* Read the input */
       in = *pIn++;
@@ -308,7 +308,7 @@ void arm_biquad_cascade_df1_q15(
     /* Decrement the loop counter */
     stage--;
 
-  } while(stage > 0u);
+  } while (stage > 0u);
 
 #else
 
@@ -347,7 +347,7 @@ void arm_biquad_cascade_df1_q15(
 
     sample = blockSize;
 
-    while(sample > 0u)
+    while (sample > 0u)
     {
       /* Read the input */
       Xn = *pIn++;
@@ -399,9 +399,9 @@ void arm_biquad_cascade_df1_q15(
     *pState++ = Yn1;
     *pState++ = Yn2;
 
-  } while(--stage);
+  } while (--stage);
 
-#endif /*     #ifndef ARM_MATH_CM0_FAMILY */
+#endif /*     #if defined(ARM_MATH_DSP) */
 
 }
 

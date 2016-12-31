@@ -56,7 +56,9 @@
  * [-1 0.9999] mapping to [-180 +180] degrees.
  *
  * The floating point function also allows values that are out of the usual range. When this happens, the function will
- * take extra time to adjust the input value to the range of [-180 180].
+ * take extra time to adjust the input value to the range of [-180 180]. 
+ *
+ * The result is accurate to 5 digits after the decimal point.
  *
  * The implementation is based on table lookup using 360 values together with linear interpolation.
  * The steps used are:

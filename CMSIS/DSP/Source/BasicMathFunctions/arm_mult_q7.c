@@ -71,7 +71,7 @@ void arm_mult_q7(
 {
   uint32_t blkCnt;                               /* loop counters */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
 /* Run the below code for Cortex-M4 and Cortex-M3 */
   q7_t out1, out2, out3, out4;                   /* Temporary variables to store the product */
@@ -81,7 +81,7 @@ void arm_mult_q7(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = A * B */
     /* Multiply the inputs and store the results in temporary variables */
@@ -108,10 +108,10 @@ void arm_mult_q7(
   /* Initialize blkCnt with number of samples */
   blkCnt = blockSize;
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = A * B */
     /* Multiply the inputs and store the result in the destination buffer */

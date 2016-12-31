@@ -69,7 +69,7 @@ q15_t arm_cos_q15(
 
   /* add 0.25 (pi/2) to read sine table */
   x = (uint16_t)x + 0x2000;
-  if(x < 0)
+  if (x < 0)
   {   /* convert negative numbers to corresponding positive ones */
       x = (uint16_t)x + 0x8000;
   }

@@ -97,12 +97,12 @@ arm_status arm_fir_init_q15(
   arm_status status;
 
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
   /* The Number of filter coefficients in the filter must be even and at least 4 */
-  if(numTaps & 0x1u)
+  if (numTaps & 0x1u)
   {
     status = ARM_MATH_ARGUMENT_ERROR;
   }
@@ -145,7 +145,7 @@ arm_status arm_fir_init_q15(
 
   return (status);
 
-#endif /*  #ifndef ARM_MATH_CM0_FAMILY */
+#endif /*  #if defined(ARM_MATH_DSP) */
 
 }
 

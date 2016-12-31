@@ -491,7 +491,7 @@ void SetClock (void) {
 
 static void WaitUs (uint32_t us) {
   uint32_t cyc = us * CPU_NANOSEC(1000)/4;
-  while(cyc--);
+  while (cyc--);
 }
 
 

@@ -148,5 +148,5 @@ int main (void) {
   osSignalSet(tid_phaseA, 0x0001);          /* set signal to phaseA thread   */
 
   osDelay(osWaitForever);
-  while(1);
+  while (1);
 }

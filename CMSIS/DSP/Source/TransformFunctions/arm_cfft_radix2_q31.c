@@ -82,7 +82,7 @@ const arm_cfft_radix2_instance_q31 * S,
 q31_t * pSrc)
 {
 
-   if(S->ifftFlag == 1u)
+   if (S->ifftFlag == 1u)
    {
       arm_radix2_butterfly_inverse_q31(pSrc, S->fftLen,
       S->pTwiddle, S->twidCoefModifier);
@@ -181,7 +181,7 @@ uint16_t twidCoefModifier)
             pSrc[2u * l + 1u] = p1;
             i += n1;
             m--;
-         } while( m > 0);                   // butterfly loop end 
+         } while ( m > 0);                   // butterfly loop end 
 
       }                           // groups loop end 
 

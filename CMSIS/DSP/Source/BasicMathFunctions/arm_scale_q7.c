@@ -74,7 +74,7 @@ void arm_scale_q7(
   int8_t kShift = 7 - shift;                     /* shift to apply after scaling */
   uint32_t blkCnt;                               /* loop counter */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
 /* Run the below code for Cortex-M4 and Cortex-M3 */
   q7_t in1, in2, in3, in4, out1, out2, out3, out4;      /* Temporary variables to store input & output */
@@ -86,7 +86,7 @@ void arm_scale_q7(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Reading 4 inputs from memory */
     in1 = *pSrc++;
@@ -113,7 +113,7 @@ void arm_scale_q7(
    ** No loop unrolling is used. */
   blkCnt = blockSize % 0x4u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = A * scale */
     /* Scale the input and then store the result in the destination buffer. */
@@ -130,7 +130,7 @@ void arm_scale_q7(
   /* Initialize blkCnt with number of samples */
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = A * scale */
     /* Scale the input and then store the result in the destination buffer. */
@@ -140,7 +140,7 @@ void arm_scale_q7(
     blkCnt--;
   }
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
 }
 

@@ -580,7 +580,7 @@ void arm_cfft_f32(
     uint32_t  L = S->fftLen, l;
     float32_t invL, * pSrc;
 
-    if(ifftFlag == 1u)
+    if (ifftFlag == 1u)
     {
         /*  Conjugate input data  */
         pSrc = p1 + 1;
@@ -610,10 +610,10 @@ void arm_cfft_f32(
         break;
     }  
 
-    if( bitReverseFlag )
+    if ( bitReverseFlag )
         arm_bitreversal_32((uint32_t*)p1,S->bitRevLength,S->pBitRevTable);
 
-    if(ifftFlag == 1u)
+    if (ifftFlag == 1u)
     {
         invL = 1.0f/(float32_t)L;
         /*  Conjugate and scale output data */

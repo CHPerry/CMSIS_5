@@ -75,7 +75,7 @@ void arm_q31_to_q15(
   q31_t *pIn = pSrc;                             /* Src pointer */
   uint32_t blkCnt;                               /* loop counter */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
   q31_t in1, in2, in3, in4;
@@ -86,7 +86,7 @@ void arm_q31_to_q15(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = (q15_t) A >> 16 */
     /* convert from q31 to q15 and then store the results in the destination buffer */
@@ -126,9 +126,9 @@ void arm_q31_to_q15(
   /* Loop over blockSize number of values */
   blkCnt = blockSize;
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C = (q15_t) A >> 16 */
     /* convert from q31 to q15 and then store the results in the destination buffer */

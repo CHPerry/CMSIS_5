@@ -116,11 +116,11 @@ void arm_lms_norm_q31(
   blkCnt = blockSize;
 
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
 
     /* Copy the new input sample into the state buffer */
@@ -146,7 +146,7 @@ void arm_lms_norm_q31(
     /* Loop unrolling.  Process 4 taps at a time. */
     tapCnt = numTaps >> 2;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Perform the multiply-accumulate */
       acc += ((q63_t) (*px++)) * (*pb++);
@@ -161,7 +161,7 @@ void arm_lms_norm_q31(
     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
     tapCnt = numTaps % 0x4u;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Perform the multiply-accumulate */
       acc += ((q63_t) (*px++)) * (*pb++);
@@ -207,7 +207,7 @@ void arm_lms_norm_q31(
     tapCnt = numTaps >> 2;
 
     /* Update filter coefficients */
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Perform the multiply-accumulate */
 
@@ -237,7 +237,7 @@ void arm_lms_norm_q31(
     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
     tapCnt = numTaps % 0x4u;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Perform the multiply-accumulate */
       coef = (q31_t) (((q63_t) w * (*px++)) >> (32));
@@ -273,7 +273,7 @@ void arm_lms_norm_q31(
   tapCnt = (numTaps - 1u) >> 2u;
 
   /* copy data */
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
     *pStateCurnt++ = *pState++;
@@ -288,7 +288,7 @@ void arm_lms_norm_q31(
   tapCnt = (numTaps - 1u) % 0x4u;
 
   /* Copy the remaining q31_t data */
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -300,7 +300,7 @@ void arm_lms_norm_q31(
 
   /* Run the below code for Cortex-M0 */
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
 
     /* Copy the new input sample into the state buffer */
@@ -326,7 +326,7 @@ void arm_lms_norm_q31(
     /* Loop over numTaps number of values */
     tapCnt = numTaps;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Perform the multiply-accumulate */
       acc += ((q63_t) (*px++)) * (*pb++);
@@ -375,7 +375,7 @@ void arm_lms_norm_q31(
     /* Loop over numTaps number of values */
     tapCnt = numTaps;
 
-    while(tapCnt > 0u)
+    while (tapCnt > 0u)
     {
       /* Perform the multiply-accumulate */
       /* coef is in 2.30 format */
@@ -414,7 +414,7 @@ void arm_lms_norm_q31(
   tapCnt = (numTaps - 1u);
 
   /* Copy the remaining q31_t data */
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -422,7 +422,7 @@ void arm_lms_norm_q31(
     tapCnt--;
   }
 
-#endif /*   #ifndef ARM_MATH_CM0_FAMILY */
+#endif /*   #if defined(ARM_MATH_DSP) */
 
 }
 

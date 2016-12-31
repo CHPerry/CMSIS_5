@@ -79,7 +79,7 @@ arm_status arm_mat_add_q15(
 
 
   /* Check for matrix mismatch condition */
-  if((pSrcA->numRows != pSrcB->numRows) ||
+  if ((pSrcA->numRows != pSrcB->numRows) ||
      (pSrcA->numCols != pSrcB->numCols) ||
      (pSrcA->numRows != pDst->numRows) || (pSrcA->numCols != pDst->numCols))
   {
@@ -93,7 +93,7 @@ arm_status arm_mat_add_q15(
     /* Total number of samples in the input matrix */
     numSamples = (uint16_t) (pSrcA->numRows * pSrcA->numCols);
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
     /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -102,7 +102,7 @@ arm_status arm_mat_add_q15(
 
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* C(m,n) = A(m,n) + B(m,n) */
       /* Add, Saturate and then store the results in the destination buffer. */
@@ -119,7 +119,7 @@ arm_status arm_mat_add_q15(
 
     /* q15 pointers of input and output are initialized */
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* C(m,n) = A(m,n) + B(m,n) */
       /* Add, Saturate and then store the results in the destination buffer. */
@@ -138,7 +138,7 @@ arm_status arm_mat_add_q15(
 
 
     /* q15 pointers of input and output are initialized */
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* C(m,n) = A(m,n) + B(m,n) */
       /* Add, Saturate and then store the results in the destination buffer. */
@@ -148,7 +148,7 @@ arm_status arm_mat_add_q15(
       blkCnt--;
     }
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
     /* set status as ARM_MATH_SUCCESS */
     status = ARM_MATH_SUCCESS;

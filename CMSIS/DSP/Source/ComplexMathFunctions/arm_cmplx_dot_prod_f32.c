@@ -95,7 +95,7 @@ void arm_cmplx_dot_prod_f32(
   float32_t real_sum = 0.0f, imag_sum = 0.0f;    /* Temporary result storage */
   float32_t a0,b0,c0,d0;
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
   uint32_t blkCnt;                               /* loop counter */
@@ -105,7 +105,7 @@ void arm_cmplx_dot_prod_f32(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
       a0 = *pSrcA++;
       b0 = *pSrcA++;
@@ -155,7 +155,7 @@ void arm_cmplx_dot_prod_f32(
    ** No loop unrolling is used. */
   blkCnt = numSamples & 0x3u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
       a0 = *pSrcA++;
       b0 = *pSrcA++;
@@ -175,7 +175,7 @@ void arm_cmplx_dot_prod_f32(
 
   /* Run the below code for Cortex-M0 */
 
-  while(numSamples > 0u)
+  while (numSamples > 0u)
   {
       a0 = *pSrcA++;
       b0 = *pSrcA++;
@@ -191,7 +191,7 @@ void arm_cmplx_dot_prod_f32(
       numSamples--;
   }
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
   /* Store the real and imaginary results in the destination buffers */
   *realResult = real_sum;

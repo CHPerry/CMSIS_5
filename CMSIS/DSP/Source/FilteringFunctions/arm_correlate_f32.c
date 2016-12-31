@@ -122,7 +122,7 @@ void arm_correlate_f32(
 {
 
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -151,7 +151,7 @@ void arm_correlate_f32(
    * (srcALen - srcBLen) zeroes has to included in the starting of the output buffer */
   /* If srcALen < srcBLen,    
    * (srcALen - srcBLen) zeroes has to included in the ending of the output buffer */
-  if(srcALen >= srcBLen)
+  if (srcALen >= srcBLen)
   {
     /* Initialization of inputA pointer */
     pIn1 = pSrcA;
@@ -171,7 +171,7 @@ void arm_correlate_f32(
     /* Updating the pointer position to non zero value */
     pOut += j;
 
-    //while(j > 0u)   
+    //while (j > 0u)   
     //{   
     //  /* Zero is stored in the destination buffer */   
     //  *pOut++ = 0.0f;   
@@ -242,7 +242,7 @@ void arm_correlate_f32(
    * ----------------------*/
 
   /* The first stage starts here */
-  while(blockSize1 > 0u)
+  while (blockSize1 > 0u)
   {
     /* Accumulator is made zero for every iteration */
     sum = 0.0f;
@@ -252,7 +252,7 @@ void arm_correlate_f32(
 
     /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.    
      ** a second loop below computes MACs for the remaining 1 to 3 samples. */
-    while(k > 0u)
+    while (k > 0u)
     {
       /* x[0] * y[srcBLen - 4] */
       sum += *px++ * *py++;
@@ -271,7 +271,7 @@ void arm_correlate_f32(
      ** No loop unrolling is used. */
     k = count % 0x4u;
 
-    while(k > 0u)
+    while (k > 0u)
     {
       /* Perform the multiply-accumulate */
       /* x[0] * y[srcBLen - 1] */
@@ -323,12 +323,12 @@ void arm_correlate_f32(
   /* Stage2 depends on srcBLen as in this stage srcBLen number of MACS are performed.    
    * So, to loop unroll over blockSize2,    
    * srcBLen should be greater than or equal to 4, to loop unroll the srcBLen loop */
-  if(srcBLen >= 4u)
+  if (srcBLen >= 4u)
   {
     /* Loop unroll over blockSize2, by 4 */
     blkCnt = blockSize2 >> 2u;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* Set all accumulators to zero */
       acc0 = 0.0f;
@@ -413,13 +413,13 @@ void arm_correlate_f32(
         acc3 += x2 * c0;
 
 
-      } while(--k);
+      } while (--k);
 
       /* If the srcBLen is not a multiple of 4, compute any remaining MACs here.    
        ** No loop unrolling is used. */
       k = srcBLen % 0x4u;
 
-      while(k > 0u)
+      while (k > 0u)
       {
         /* Read y[4] sample */
         c0 = *(py++);
@@ -475,7 +475,7 @@ void arm_correlate_f32(
      ** No loop unrolling is used. */
     blkCnt = blockSize2 % 0x4u;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* Accumulator is made zero for every iteration */
       sum = 0.0f;
@@ -485,7 +485,7 @@ void arm_correlate_f32(
 
       /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.    
        ** a second loop below computes MACs for the remaining 1 to 3 samples. */
-      while(k > 0u)
+      while (k > 0u)
       {
         /* Perform the multiply-accumulates */
         sum += *px++ * *py++;
@@ -501,7 +501,7 @@ void arm_correlate_f32(
        ** No loop unrolling is used. */
       k = srcBLen % 0x4u;
 
-      while(k > 0u)
+      while (k > 0u)
       {
         /* Perform the multiply-accumulate */
         sum += *px++ * *py++;
@@ -532,7 +532,7 @@ void arm_correlate_f32(
      * the blockSize2 loop cannot be unrolled by 4 */
     blkCnt = blockSize2;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* Accumulator is made zero for every iteration */
       sum = 0.0f;
@@ -540,7 +540,7 @@ void arm_correlate_f32(
       /* Loop over srcBLen */
       k = srcBLen;
 
-      while(k > 0u)
+      while (k > 0u)
       {
         /* Perform the multiply-accumulate */
         sum += *px++ * *py++;
@@ -592,7 +592,7 @@ void arm_correlate_f32(
    * Stage3 process    
    * ------------------*/
 
-  while(blockSize3 > 0u)
+  while (blockSize3 > 0u)
   {
     /* Accumulator is made zero for every iteration */
     sum = 0.0f;
@@ -602,7 +602,7 @@ void arm_correlate_f32(
 
     /* First part of the processing with loop unrolling.  Compute 4 MACs at a time.    
      ** a second loop below computes MACs for the remaining 1 to 3 samples. */
-    while(k > 0u)
+    while (k > 0u)
     {
       /* Perform the multiply-accumulates */
       /* sum += x[srcALen - srcBLen + 4] * y[3] */
@@ -622,7 +622,7 @@ void arm_correlate_f32(
      ** No loop unrolling is used. */
     k = count % 0x4u;
 
-    while(k > 0u)
+    while (k > 0u)
     {
       /* Perform the multiply-accumulates */
       sum += *px++ * *py++;
@@ -677,7 +677,7 @@ void arm_correlate_f32(
   /* Calculate the length of the remaining sequence */
   tot = ((srcALen + srcBLen) - 2u);
 
-  if(srcALen > srcBLen)
+  if (srcALen > srcBLen)
   {
     /* Calculating the number of zeros to be padded to the output */
     j = srcALen - srcBLen;
@@ -686,7 +686,7 @@ void arm_correlate_f32(
     pDst += j;
   }
 
-  else if(srcALen < srcBLen)
+  else if (srcALen < srcBLen)
   {
     /* Initialization to inputB pointer */
     pIn1 = pSrcB;
@@ -717,20 +717,20 @@ void arm_correlate_f32(
     for (j = 0u; j <= i; j++)
     {
       /* Check the array limitations */
-      if((((i - j) < srcBLen) && (j < srcALen)))
+      if ((((i - j) < srcBLen) && (j < srcALen)))
       {
         /* z[i] += x[i-j] * y[j] */
         sum += pIn1[j] * pIn2[-((int32_t) i - j)];
       }
     }
     /* Store the output in the destination buffer */
-    if(inv == 1)
+    if (inv == 1)
       *pDst-- = sum;
     else
       *pDst++ = sum;
   }
 
-#endif /*   #ifndef ARM_MATH_CM0_FAMILY */
+#endif /*   #if defined(ARM_MATH_DSP) */
 
 }
 

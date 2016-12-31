@@ -76,7 +76,7 @@ arm_status arm_mat_trans_f32(
   uint16_t nRows = pSrc->numRows;                /* number of rows */
   uint16_t nColumns = pSrc->numCols;             /* number of columns */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -88,7 +88,7 @@ arm_status arm_mat_trans_f32(
 
 
   /* Check for matrix mismatch condition */
-  if((pSrc->numRows != pDst->numCols) || (pSrc->numCols != pDst->numRows))
+  if ((pSrc->numRows != pDst->numCols) || (pSrc->numCols != pDst->numRows))
   {
     /* Set status as ARM_MATH_SIZE_MISMATCH */
     status = ARM_MATH_SIZE_MISMATCH;
@@ -109,7 +109,7 @@ arm_status arm_mat_trans_f32(
 
       /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
        ** a second loop below computes the remaining 1 to 3 samples. */
-      while(blkCnt > 0u)        /* column loop */
+      while (blkCnt > 0u)        /* column loop */
       {
         /* Read and store the input element in the destination */
         *px = *pIn++;
@@ -142,7 +142,7 @@ arm_status arm_mat_trans_f32(
       /* Perform matrix transpose for last 3 samples here. */
       blkCnt = nColumns % 0x4u;
 
-      while(blkCnt > 0u)
+      while (blkCnt > 0u)
       {
         /* Read and store the input element in the destination */
         *px = *pIn++;
@@ -165,7 +165,7 @@ arm_status arm_mat_trans_f32(
 #ifdef ARM_MATH_MATRIX_CHECK
 
   /* Check for matrix mismatch condition */
-  if((pSrc->numRows != pDst->numCols) || (pSrc->numCols != pDst->numRows))
+  if ((pSrc->numRows != pDst->numCols) || (pSrc->numCols != pDst->numRows))
   {
     /* Set status as ARM_MATH_SIZE_MISMATCH */
     status = ARM_MATH_SIZE_MISMATCH;
@@ -184,7 +184,7 @@ arm_status arm_mat_trans_f32(
       /* Initialize column loop counter */
       col = nColumns;
 
-      while(col > 0u)
+      while (col > 0u)
       {
         /* Read and store the input element in the destination */
         *px = *pIn++;
@@ -196,14 +196,14 @@ arm_status arm_mat_trans_f32(
         col--;
       }
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
       i++;
 
       /* Decrement the row loop counter */
       row--;
 
-    } while(row > 0u);          /* row loop end  */
+    } while (row > 0u);          /* row loop end  */
 
     /* Set status as ARM_MATH_SUCCESS */
     status = ARM_MATH_SUCCESS;

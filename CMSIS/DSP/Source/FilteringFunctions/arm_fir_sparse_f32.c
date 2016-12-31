@@ -153,7 +153,7 @@ void arm_fir_sparse_f32(
   readIndex = ((int32_t) S->stateIndex - (int32_t) blockSize) - *pTapDelay++;
 
   /* Wraparound of readIndex */
-  if(readIndex < 0)
+  if (readIndex < 0)
   {
     readIndex += (int32_t) delaySize;
   }
@@ -173,7 +173,7 @@ void arm_fir_sparse_f32(
   pOut = pDst;
 
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -181,7 +181,7 @@ void arm_fir_sparse_f32(
    * Compute 4 Multiplications at a time. */
   blkCnt = blockSize >> 2u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Perform Multiplications and store in destination buffer */
     *pOut++ = *px++ * coeff;
@@ -197,7 +197,7 @@ void arm_fir_sparse_f32(
    * compute the remaining samples */
   blkCnt = blockSize % 0x4u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Perform Multiplications and store in destination buffer */
     *pOut++ = *px++ * coeff;
@@ -214,7 +214,7 @@ void arm_fir_sparse_f32(
   readIndex = ((int32_t) S->stateIndex - (int32_t) blockSize) - *pTapDelay++;
 
   /* Wraparound of readIndex */
-  if(readIndex < 0)
+  if (readIndex < 0)
   {
     readIndex += (int32_t) delaySize;
   }
@@ -222,7 +222,7 @@ void arm_fir_sparse_f32(
   /* Loop over the number of taps. */
   tapCnt = (uint32_t) numTaps - 2u;
 
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
 
     /* Working pointer for state buffer is updated */
@@ -243,7 +243,7 @@ void arm_fir_sparse_f32(
      * Compute 4 MACS at a time. */
     blkCnt = blockSize >> 2u;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* Perform Multiply-Accumulate */
       *pOut++ += *px++ * coeff;
@@ -259,7 +259,7 @@ void arm_fir_sparse_f32(
      * compute the remaining samples */
     blkCnt = blockSize % 0x4u;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* Perform Multiply-Accumulate */
       *pOut++ += *px++ * coeff;
@@ -277,7 +277,7 @@ void arm_fir_sparse_f32(
                  (int32_t) blockSize) - *pTapDelay++;
 
     /* Wraparound of readIndex */
-    if(readIndex < 0)
+    if (readIndex < 0)
     {
       readIndex += (int32_t) delaySize;
     }
@@ -306,7 +306,7 @@ void arm_fir_sparse_f32(
 	 * Compute 4 MACS at a time. */
 	blkCnt = blockSize >> 2u;
 
-	while(blkCnt > 0u)
+	while (blkCnt > 0u)
 	{
 		/* Perform Multiply-Accumulate */
 		*pOut++ += *px++ * coeff;
@@ -322,7 +322,7 @@ void arm_fir_sparse_f32(
 	 * compute the remaining samples */
 	blkCnt = blockSize % 0x4u;
 
-	while(blkCnt > 0u)
+	while (blkCnt > 0u)
 	{
 		/* Perform Multiply-Accumulate */
 		*pOut++ += *px++ * coeff;
@@ -337,7 +337,7 @@ void arm_fir_sparse_f32(
 
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Perform Multiplications and store in destination buffer */
     *pOut++ = *px++ * coeff;
@@ -354,7 +354,7 @@ void arm_fir_sparse_f32(
   readIndex = ((int32_t) S->stateIndex - (int32_t) blockSize) - *pTapDelay++;
 
   /* Wraparound of readIndex */
-  if(readIndex < 0)
+  if (readIndex < 0)
   {
     readIndex += (int32_t) delaySize;
   }
@@ -362,7 +362,7 @@ void arm_fir_sparse_f32(
   /* Loop over the number of taps. */
   tapCnt = (uint32_t) numTaps - 2u;
 
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
 
     /* Working pointer for state buffer is updated */
@@ -381,7 +381,7 @@ void arm_fir_sparse_f32(
 
     blkCnt = blockSize;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* Perform Multiply-Accumulate */
       *pOut++ += *px++ * coeff;
@@ -399,7 +399,7 @@ void arm_fir_sparse_f32(
       ((int32_t) S->stateIndex - (int32_t) blockSize) - *pTapDelay++;
 
     /* Wraparound of readIndex */
-    if(readIndex < 0)
+    if (readIndex < 0)
     {
       readIndex += (int32_t) delaySize;
     }
@@ -426,7 +426,7 @@ void arm_fir_sparse_f32(
 
 	blkCnt = blockSize;
 
-	while(blkCnt > 0u)
+	while (blkCnt > 0u)
 	{
 		/* Perform Multiply-Accumulate */
 		*pOut++ += *px++ * coeff;
@@ -435,7 +435,7 @@ void arm_fir_sparse_f32(
 		blkCnt--;
 	}
 
-#endif /*   #ifndef ARM_MATH_CM0_FAMILY        */
+#endif /*   #if defined(ARM_MATH_DSP)        */
 
 }
 

@@ -74,12 +74,12 @@ arm_status arm_mat_sub_q31(
   q31_t *pOut = pDst->pData;                     /* output data matrix pointer */
   q31_t inA1, inB1;                              /* temporary variables */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   q31_t inA2, inB2;                              /* temporary variables */
   q31_t out1, out2;                              /* temporary variables */
 
-#endif //      #ifndef ARM_MATH_CM0_FAMILY
+#endif //      #if defined(ARM_MATH_DSP)
 
   uint32_t numSamples;                           /* total number of elements in the matrix  */
   uint32_t blkCnt;                               /* loop counters */
@@ -88,7 +88,7 @@ arm_status arm_mat_sub_q31(
 
 #ifdef ARM_MATH_MATRIX_CHECK
   /* Check for matrix mismatch condition  */
-  if((pSrcA->numRows != pSrcB->numRows) ||
+  if ((pSrcA->numRows != pSrcB->numRows) ||
      (pSrcA->numCols != pSrcB->numCols) ||
      (pSrcA->numRows != pDst->numRows) || (pSrcA->numCols != pDst->numCols))
   {
@@ -101,7 +101,7 @@ arm_status arm_mat_sub_q31(
     /* Total number of samples in the input matrix */
     numSamples = (uint32_t) pSrcA->numRows * pSrcA->numCols;
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
     /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -110,7 +110,7 @@ arm_status arm_mat_sub_q31(
 
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* C(m,n) = A(m,n) - B(m,n) */
       /* Subtract, saturate and then store the results in the destination buffer. */
@@ -178,9 +178,9 @@ arm_status arm_mat_sub_q31(
     /* Initialize blkCnt with number of samples */
     blkCnt = numSamples;
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* C(m,n) = A(m,n) - B(m,n) */
       /* Subtract, saturate and then store the results in the destination buffer. */

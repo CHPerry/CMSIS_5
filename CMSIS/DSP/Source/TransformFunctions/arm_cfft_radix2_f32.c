@@ -84,7 +84,7 @@ const arm_cfft_radix2_instance_f32 * S,
 float32_t * pSrc)
 {
 
-   if(S->ifftFlag == 1u)
+   if (S->ifftFlag == 1u)
    {
       /*  Complex IFFT radix-2  */
       arm_radix2_butterfly_inverse_f32(pSrc, S->fftLen, S->pTwiddle,
@@ -97,7 +97,7 @@ float32_t * pSrc)
       S->twidCoefModifier);
    }
 
-   if(S->bitReverseFlag == 1u)
+   if (S->bitReverseFlag == 1u)
    {
       /*  Bit Reversal */
       arm_bitreversal_f32(pSrc, S->fftLen, S->bitRevFactor, S->pBitRevTable);
@@ -138,7 +138,7 @@ uint16_t twidCoefModifier)
    float32_t p0, p1, p2, p3;
    float32_t a0, a1;
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
    /*  Initializations for the first stage */
    n2 = fftLen >> 1;
@@ -219,9 +219,9 @@ uint16_t twidCoefModifier)
             pSrc[2 * l + 1] = p2 - p3;
             
             i += n1;
-         } while( i < fftLen );                        // butterfly loop end 
+         } while ( i < fftLen );                        // butterfly loop end 
          j++;
-      } while( j < n2);                          // groups loop end 
+      } while ( j < n2);                          // groups loop end 
       twidCoefModifier <<= 1u;
    }                             // stages loop end 
 
@@ -282,13 +282,13 @@ uint16_t twidCoefModifier)
             pSrc[2 * l + 1] = p2 - p3;
             
             i += n1;
-         } while(i < fftLen);
+         } while (i < fftLen);
          j++;
-      } while(j < n2);
+      } while (j < n2);
       twidCoefModifier <<= 1u;
    }
 
-#endif //    #ifndef ARM_MATH_CM0_FAMILY
+#endif //    #if defined(ARM_MATH_DSP)
 
 }
 
@@ -307,7 +307,7 @@ float32_t onebyfftLen)
    float32_t p0, p1, p2, p3;
    float32_t a0, a1;
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
    n2 = fftLen >> 1;
    ia = 0;
@@ -378,9 +378,9 @@ float32_t onebyfftLen)
             pSrc[2 * l + 1] = p2 + p3; 
 
             i += n1;
-         } while( i < fftLen );                 // butterfly loop end 
+         } while ( i < fftLen );                 // butterfly loop end 
          j++;
-      } while(j < n2);                      // groups loop end 
+      } while (j < n2);                      // groups loop end 
 
       twidCoefModifier <<= 1u;
    }                             // stages loop end 
@@ -447,9 +447,9 @@ float32_t onebyfftLen)
             pSrc[2 * l + 1] = p2 + p3;  
             
             i += n1;
-         } while( i < fftLen );                    // butterfly loop end 
+         } while ( i < fftLen );                    // butterfly loop end 
          j++;
-      } while( j < n2 );                      // groups loop end 
+      } while ( j < n2 );                      // groups loop end 
 
       twidCoefModifier = twidCoefModifier << 1u;
    }                             // stages loop end 
@@ -480,6 +480,6 @@ float32_t onebyfftLen)
       pSrc[2u * l + 1u] = p3;
    }                             // butterfly loop end 
 
-#endif //      #ifndef ARM_MATH_CM0_FAMILY
+#endif //      #if defined(ARM_MATH_DSP)
 
 }

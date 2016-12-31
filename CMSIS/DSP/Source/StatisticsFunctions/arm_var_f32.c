@@ -84,9 +84,6 @@ void arm_var_f32(
     float32_t * pInput = pSrc;
     float32_t sum = 0.0f;
     float32_t fSum = 0.0f;
-    #if !defined(ARM_MATH_CM0_FAMILY) && !defined(ARM_MATH_CM3_FAMILY)
-    float32_t in1, in2, in3, in4;
-    #endif
 
     if (blockSize <= 1u)
     {
@@ -94,9 +91,11 @@ void arm_var_f32(
         return;
     }
 
-    #if !defined(ARM_MATH_CM0_FAMILY) && !defined(ARM_MATH_CM3_FAMILY)
+    #if defined(ARM_MATH_DSP)
+    {
         /* Run the below code for Cortex-M4 and Cortex-M7 */
-
+        float32_t in1, in2, in3, in4;
+        
         /*loop Unrolling */
         blkCnt = blockSize >> 2u;
 
@@ -122,6 +121,7 @@ void arm_var_f32(
         /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
         ** No loop unrolling is used. */
         blkCnt = blockSize % 0x4u;
+    }
 
     #else
         /* Run the below code for Cortex-M0 or Cortex-M3 */
@@ -145,7 +145,7 @@ void arm_var_f32(
 
     pInput = pSrc;
 
-    #if !defined(ARM_MATH_CM0_FAMILY) && !defined(ARM_MATH_CM3_FAMILY)
+    #if defined(ARM_MATH_DSP)
 
         /*loop Unrolling */
         blkCnt = blockSize >> 2u;

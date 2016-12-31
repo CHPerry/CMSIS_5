@@ -99,7 +99,7 @@ arm_status arm_mat_cmplx_mult_q31(
 
 
   /* Check for matrix mismatch condition */
-  if((pSrcA->numCols != pSrcB->numRows) ||
+  if ((pSrcA->numCols != pSrcB->numRows) ||
      (pSrcA->numRows != pDst->numRows) || (pSrcB->numCols != pDst->numCols))
   {
 
@@ -140,7 +140,7 @@ arm_status arm_mat_cmplx_mult_q31(
         colCnt = numColsA >> 2;
 
         /* matrix multiplication        */
-        while(colCnt > 0u)
+        while (colCnt > 0u)
         {
 
           /* Reading real part of complex matrix A */
@@ -233,7 +233,7 @@ arm_status arm_mat_cmplx_mult_q31(
          ** No loop unrolling is used. */
         colCnt = numColsA % 0x4u;
 
-        while(colCnt > 0u)
+        while (colCnt > 0u)
         {
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
           a1 = *pIn1;
@@ -269,7 +269,7 @@ arm_status arm_mat_cmplx_mult_q31(
         /* Decrement the column loop counter */
         col--;
 
-      } while(col > 0u);
+      } while (col > 0u);
 
       /* Update the pointer pInA to point to the  starting address of the next row */
       i = i + numColsB;
@@ -278,7 +278,7 @@ arm_status arm_mat_cmplx_mult_q31(
       /* Decrement the row loop counter */
       row--;
 
-    } while(row > 0u);
+    } while (row > 0u);
 
     /* Set status as ARM_MATH_SUCCESS */
     status = ARM_MATH_SUCCESS;

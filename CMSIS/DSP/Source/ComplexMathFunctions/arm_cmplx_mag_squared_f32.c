@@ -89,7 +89,7 @@ void arm_cmplx_mag_squared_f32(
   float32_t real, imag;                          /* Temporary variables to store real and imaginary values */
   uint32_t blkCnt;                               /* loop counter */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
   float32_t real1, real2, real3, real4;          /* Temporary variables to hold real values */
   float32_t imag1, imag2, imag3, imag4;          /* Temporary variables to hold imaginary values */
   float32_t mul1, mul2, mul3, mul4;              /* Temporary variables */
@@ -101,7 +101,7 @@ void arm_cmplx_mag_squared_f32(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.        
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C[0] = (A[0] * A[0] + A[1] * A[1]) */
     /* read real input sample from source buffer */
@@ -193,9 +193,9 @@ void arm_cmplx_mag_squared_f32(
 
   blkCnt = numSamples;
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C[0] = (A[0] * A[0] + A[1] * A[1]) */
     real = *pSrc++;

@@ -96,7 +96,7 @@ void arm_fir_sparse_q31(
   readIndex = (int32_t) (S->stateIndex - blockSize) - *pTapDelay++;
 
   /* Wraparound of readIndex */
-  if(readIndex < 0)
+  if (readIndex < 0)
   {
     readIndex += (int32_t) delaySize;
   }
@@ -116,7 +116,7 @@ void arm_fir_sparse_q31(
   pOut = pDst;
 
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -124,7 +124,7 @@ void arm_fir_sparse_q31(
    * Compute 4 Multiplications at a time. */
   blkCnt = blockSize >> 2;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Perform Multiplications and store in the destination buffer */
     *pOut++ = (q31_t) (((q63_t) * px++ * coeff) >> 32);
@@ -140,7 +140,7 @@ void arm_fir_sparse_q31(
    * compute the remaining samples */
   blkCnt = blockSize % 0x4u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Perform Multiplications and store in the destination buffer */
     *pOut++ = (q31_t) (((q63_t) * px++ * coeff) >> 32);
@@ -157,7 +157,7 @@ void arm_fir_sparse_q31(
   readIndex = (int32_t) (S->stateIndex - blockSize) - *pTapDelay++;
 
   /* Wraparound of readIndex */
-  if(readIndex < 0)
+  if (readIndex < 0)
   {
     readIndex += (int32_t) delaySize;
   }
@@ -165,7 +165,7 @@ void arm_fir_sparse_q31(
   /* Loop over the number of taps. */
   tapCnt = (uint32_t) numTaps - 2u;
 
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     /* Working pointer for state buffer is updated */
     py = pState;
@@ -185,7 +185,7 @@ void arm_fir_sparse_q31(
      * Compute 4 MACS at a time. */
     blkCnt = blockSize >> 2;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       out = *pOut;
       out += ((q63_t) * px++ * coeff) >> 32;
@@ -211,7 +211,7 @@ void arm_fir_sparse_q31(
      * compute the remaining samples */
     blkCnt = blockSize % 0x4u;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* Perform Multiply-Accumulate */
       out = *pOut;
@@ -230,7 +230,7 @@ void arm_fir_sparse_q31(
     readIndex = (int32_t) (S->stateIndex - blockSize) - *pTapDelay++;
 
     /* Wraparound of readIndex */
-    if(readIndex < 0)
+    if (readIndex < 0)
     {
       readIndex += (int32_t) delaySize;
     }
@@ -259,7 +259,7 @@ void arm_fir_sparse_q31(
 	 * Compute 4 MACS at a time. */
 	blkCnt = blockSize >> 2;
 
-	while(blkCnt > 0u)
+	while (blkCnt > 0u)
 	{
 		out = *pOut;
 		out += ((q63_t) * px++ * coeff) >> 32;
@@ -285,7 +285,7 @@ void arm_fir_sparse_q31(
 	 * compute the remaining samples */
 	blkCnt = blockSize % 0x4u;
 
-	while(blkCnt > 0u)
+	while (blkCnt > 0u)
 	{
 		/* Perform Multiply-Accumulate */
 		out = *pOut;
@@ -304,7 +304,7 @@ void arm_fir_sparse_q31(
    * process 4 output samples at a time. */
   blkCnt = blockSize >> 2;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     in = *pOut << 1;
     *pOut++ = in;
@@ -323,7 +323,7 @@ void arm_fir_sparse_q31(
    * process the remaining output samples */
   blkCnt = blockSize % 0x4u;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     in = *pOut << 1;
     *pOut++ = in;
@@ -337,7 +337,7 @@ void arm_fir_sparse_q31(
   /* Run the below code for Cortex-M0 */
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* Perform Multiplications and store in the destination buffer */
     *pOut++ = (q31_t) (((q63_t) * px++ * coeff) >> 32);
@@ -354,7 +354,7 @@ void arm_fir_sparse_q31(
   readIndex = (int32_t) (S->stateIndex - blockSize) - *pTapDelay++;
 
   /* Wraparound of readIndex */
-  if(readIndex < 0)
+  if (readIndex < 0)
   {
     readIndex += (int32_t) delaySize;
   }
@@ -362,7 +362,7 @@ void arm_fir_sparse_q31(
   /* Loop over the number of taps. */
   tapCnt = (uint32_t) numTaps - 2u;
 
-  while(tapCnt > 0u)
+  while (tapCnt > 0u)
   {
     /* Working pointer for state buffer is updated */
     py = pState;
@@ -380,7 +380,7 @@ void arm_fir_sparse_q31(
 
     blkCnt = blockSize;
 
-    while(blkCnt > 0u)
+    while (blkCnt > 0u)
     {
       /* Perform Multiply-Accumulate */
       out = *pOut;
@@ -399,7 +399,7 @@ void arm_fir_sparse_q31(
     readIndex = (int32_t) (S->stateIndex - blockSize) - *pTapDelay++;
 
     /* Wraparound of readIndex */
-    if(readIndex < 0)
+    if (readIndex < 0)
     {
       readIndex += (int32_t) delaySize;
     }
@@ -426,7 +426,7 @@ void arm_fir_sparse_q31(
 
 	blkCnt = blockSize;
 
-	while(blkCnt > 0u)
+	while (blkCnt > 0u)
 	{
 		/* Perform Multiply-Accumulate */
 		out = *pOut;
@@ -443,7 +443,7 @@ void arm_fir_sparse_q31(
   /* Output is converted into 1.31 format. */
   blkCnt = blockSize;
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     in = *pOut << 1;
     *pOut++ = in;
@@ -452,7 +452,7 @@ void arm_fir_sparse_q31(
     blkCnt--;
   }
 
-#endif /*   #ifndef ARM_MATH_CM0_FAMILY */
+#endif /*   #if defined(ARM_MATH_DSP) */
 
 }
 

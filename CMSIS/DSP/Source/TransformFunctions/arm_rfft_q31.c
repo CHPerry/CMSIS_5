@@ -94,7 +94,7 @@ void arm_rfft_q31(
     uint32_t L2 = S->fftLenReal >> 1;
 
     /* Calculation of RIFFT of input */
-    if(S->ifftFlagR == 1u)
+    if (S->ifftFlagR == 1u)
     {
         /*  Real IFFT core process */
         arm_split_rifft_q31(pSrc, L2, S->pTwiddleAReal,
@@ -156,7 +156,7 @@ void arm_split_rfft_q31(
 
     i = fftLen - 1u;
 
-    while(i > 0u)
+    while (i > 0u)
     {
         /*    
         outR = (pSrc[2 * i] * pATable[2 * i] - pSrc[2 * i + 1] * pATable[2 * i + 1]    
@@ -243,7 +243,7 @@ void arm_split_rifft_q31(
     pCoefA = &pATable[0];
     pCoefB = &pBTable[0];
 
-    while(fftLen > 0u)
+    while (fftLen > 0u)
     {
         /*    
         outR = (pIn[2 * i] * pATable[2 * i] + pIn[2 * i + 1] * pATable[2 * i + 1] +    

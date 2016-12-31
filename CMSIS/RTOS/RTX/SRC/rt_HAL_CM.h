@@ -195,8 +195,8 @@ extern BIT dbg_msg;
 
 /* Functions */
 #ifdef __USE_EXCLUSIVE_ACCESS
- #define rt_inc(p)     while(__strex((__ldrex(p)+1U),p))
- #define rt_dec(p)     while(__strex((__ldrex(p)-1U),p))
+ #define rt_inc(p)     while (__strex((__ldrex(p)+1U),p))
+ #define rt_dec(p)     while (__strex((__ldrex(p)-1U),p))
 #else
  #define rt_inc(p)     __disable_irq();(*p)++;__enable_irq();
  #define rt_dec(p)     __disable_irq();(*p)--;__enable_irq();

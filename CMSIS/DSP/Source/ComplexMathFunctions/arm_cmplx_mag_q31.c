@@ -71,7 +71,7 @@ void arm_cmplx_mag_q31(
   q31_t acc0, acc1;                              /* Accumulators */
   uint32_t blkCnt;                               /* loop counter */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
   q31_t real1, real2, imag1, imag2;              /* Temporary variables to hold input values */
@@ -84,7 +84,7 @@ void arm_cmplx_mag_q31(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.        
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* read complex input from source buffer */
     real1 = pSrc[0];
@@ -163,9 +163,9 @@ void arm_cmplx_mag_q31(
   /* Run the below code for Cortex-M0 */
   blkCnt = numSamples;
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C[0] = sqrt(A[0] * A[0] + A[1] * A[1]) */
     real = *pSrc++;

@@ -69,7 +69,7 @@ void arm_cmplx_conj_q31(
   uint32_t blkCnt;                               /* loop counter */
   q31_t in;                                      /* Input value */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
   q31_t inR1, inR2, inR3, inR4;                  /* Temporary real variables */
@@ -80,7 +80,7 @@ void arm_cmplx_conj_q31(
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.        
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C[0]+jC[1] = A[0]+ j (-1) A[1] */
     /* Calculate Complex Conjugate and then store the results in the destination buffer. */
@@ -159,9 +159,9 @@ void arm_cmplx_conj_q31(
   blkCnt = numSamples;
 
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 
-  while(blkCnt > 0u)
+  while (blkCnt > 0u)
   {
     /* C[0]+jC[1] = A[0]+ j (-1) A[1] */
     /* Calculate Complex Conjugate and then store the results in the destination buffer. */

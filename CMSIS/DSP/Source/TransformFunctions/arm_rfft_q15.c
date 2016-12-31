@@ -94,7 +94,7 @@ void arm_rfft_q15(
     uint32_t L2 = S->fftLenReal >> 1;
 
     /* Calculation of RIFFT of input */
-    if(S->ifftFlagR == 1u)
+    if (S->ifftFlagR == 1u)
     {
         /*  Real IFFT core process */
         arm_split_rifft_q15(pSrc, L2, S->pTwiddleAReal,
@@ -149,7 +149,7 @@ void arm_split_rfft_q15(
     q31_t outR, outI;                              /* Temporary variables for output */
     q15_t *pCoefA, *pCoefB;                        /* Temporary pointers for twiddle factors */
     q15_t *pSrc1, *pSrc2;
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
     q15_t *pD1, *pD2;
 #endif
 
@@ -162,7 +162,7 @@ void arm_split_rfft_q15(
     pSrc1 = &pSrc[2];
     pSrc2 = &pSrc[(2u * fftLen) - 2u];
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
     /* Run the below code for Cortex-M4 and Cortex-M3 */
     i = 1u;
@@ -239,7 +239,7 @@ void arm_split_rfft_q15(
     /* Run the below code for Cortex-M0 */
     i = 1u;
 
-    while(i < fftLen)
+    while (i < fftLen)
     {
         /*    
         outR = (pSrc[2 * i] * pATable[2 * i] - pSrc[2 * i + 1] * pATable[2 * i + 1]    
@@ -288,7 +288,7 @@ void arm_split_rfft_q15(
     pDst[0] = (pSrc[0] + pSrc[1]) >> 1;
     pDst[1] = 0;
 
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 }
 
 
@@ -323,12 +323,12 @@ void arm_split_rifft_q15(
     pSrc1 = &pSrc[0];
     pSrc2 = &pSrc[2u * fftLen];
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP)
 
     /* Run the below code for Cortex-M4 and Cortex-M3 */
     i = fftLen;
 
-    while(i > 0u)
+    while (i > 0u)
     {
         /*    
         outR = (pIn[2 * i] * pATable[2 * i] + pIn[2 * i + 1] * pATable[2 * i + 1] +    
@@ -397,7 +397,7 @@ void arm_split_rifft_q15(
     /* Run the below code for Cortex-M0 */
     i = fftLen;
 
-    while(i > 0u)
+    while (i > 0u)
     {
         /*    
         outR = (pIn[2 * i] * pATable[2 * i] + pIn[2 * i + 1] * pATable[2 * i + 1] +    
@@ -435,5 +435,5 @@ void arm_split_rifft_q15(
 
         i--;
     }
-#endif /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #if defined(ARM_MATH_DSP) */
 }

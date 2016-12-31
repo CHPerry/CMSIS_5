@@ -96,7 +96,7 @@ float32_t arm_cos_f32(
   n = (int32_t) in;
 
   /* Make negative values towards -infinity */
-  if(in < 0.0f)
+  if (in < 0.0f)
   {
     n--;
   }

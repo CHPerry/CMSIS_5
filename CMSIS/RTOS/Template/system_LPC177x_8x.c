@@ -370,7 +370,7 @@ void SystemCoreClockUpdate (void)            /* Get Core Clock Frequency      */
     }
   }
   /* ---update USBClock------------------*/
-  if(LPC_SC->USBCLKSEL & (0x01<<8))//Use PLL0 as the input to the USB clock divider
+  if (LPC_SC->USBCLKSEL & (0x01<<8))//Use PLL0 as the input to the USB clock divider
   {
 	  switch (LPC_SC->USBCLKSEL & 0x1F)
 	  {
@@ -379,7 +379,7 @@ void SystemCoreClockUpdate (void)            /* Get Core Clock Frequency      */
 		  break;
 	  case 4:
 	  case 6:
-		  if(LPC_SC->CLKSRCSEL & 0x01)	//pll_clk_in = main_osc
+		  if (LPC_SC->CLKSRCSEL & 0x01)	//pll_clk_in = main_osc
 			  USBClock = (OSC_CLK * ((LPC_SC->PLL0STAT & 0x1F) + 1) / (LPC_SC->USBCLKSEL & 0x1F));
 		  else //pll_clk_in = irc_clk
 			  USBClock = (IRC_OSC * ((LPC_SC->PLL0STAT & 0x1F) + 1) / (LPC_SC->USBCLKSEL & 0x1F));
@@ -388,9 +388,9 @@ void SystemCoreClockUpdate (void)            /* Get Core Clock Frequency      */
 		  USBClock = 0;  /* this should never happen! */
 	  }
   }
-  else if(LPC_SC->USBCLKSEL & (0x02<<8))//usb_input_clk = alt_pll (pll1)
+  else if (LPC_SC->USBCLKSEL & (0x02<<8))//usb_input_clk = alt_pll (pll1)
   {
-	  if(LPC_SC->CLKSRCSEL & 0x01)	//pll1_clk_in = main_osc
+	  if (LPC_SC->CLKSRCSEL & 0x01)	//pll1_clk_in = main_osc
 	  		USBClock = (OSC_CLK * ((LPC_SC->PLL1STAT & 0x1F) + 1));
 	  else //pll1_clk_in = irc_clk
 	  		USBClock = (IRC_OSC * ((LPC_SC->PLL0STAT & 0x1F) + 1));
